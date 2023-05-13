@@ -196,7 +196,7 @@ def sending(senddata):
     client1.loop()
   else: ## Send via REST
     for pixelitUrl in config.setup['pixeliturls']:
-      print(str(pixelitUrl))
+      #print("[DEBUG]",str(pixelitUrl))
       sendurl = pixelitUrl + '/api/screen'
       #print("[DEBUG] Sending ",senddata,"to",sendurl)
       sendheaders = {'Content-Type': 'application/json'}
