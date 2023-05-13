@@ -1,7 +1,7 @@
 # License
 
-{{ project }}
-Copyright (C) {{ year }}  {{ organization }}
+pixelit.py and Pixelit Server
+Copyright (C) 2023
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -36,6 +36,17 @@ Imagine you have some python scripts like grabing news from an RSS feed, followi
 
 And hopefully you don't have do dig deep into pixelit.py's code since all important settings are easily accessible in a handy `config.py`.
 
+
+
+### pixelit.py features
+
+* Sending text & icons to your pixelit matrix (or multiple!)
+* 
+* Approximate display time for longer messages
+* handling cache (e.g. you don't want to reach an API every single minute for the same result - save it localy!)
+* 
+
+
 #### Example Apps are:
 
 * Simple Clock Display
@@ -45,6 +56,13 @@ And hopefully you don't have do dig deep into pixelit.py's code since all import
 * Dota2 Winrate Calculator
 * Nightscout Bloodsugar Display
 * tatort / Polizeiruf 110 Checker
+
+
+### Setup pixelit.py via config.py
+
+`config.py` is the central file to change settings according to your needs. pixelit.py and apps will use information saved in this file.
+
+> :warning: Please enter one or more URLs of your pixelit controller to get started.
 
 ### Sending Text to Matrix
 
@@ -59,6 +77,7 @@ sendText(
    centerText="false"
    )
 ```
+
 | Parameter | Type | Values | Description |
 |-----------|------|--------|-------------|
 |`text_msg`|String|        |Text to display on the led matrix|
@@ -86,7 +105,7 @@ For details please also consider https://pixelit-project.github.io/api.html#text
    )
  ```
 
-This functions shares the same arguments as sendText() but also has the `icon` argument, which needs a bitmap description in braces as String.
+This functions shares the same arguments as `sendText()` but also has the `icon` argument, which needs a bitmap description in braces as String.
 
 | Parameter | Type | Values | Description |
 |-----------|------|--------|-------------|
@@ -95,11 +114,26 @@ This functions shares the same arguments as sendText() but also has the `icon` a
 For details please also consider https://pixelit-project.github.io/api.html#text
 
 
-##### `sendNotification()` (not implemented yet)
+### `sendNotification()` (not implemented yet)
+
+ (Implementation tbd.)
+
+### pixelItSleep(bool=True)
+
+ (Documentation tbd.)
+
+### skipApp()
+
+ (Documentation tbd.)
 
 ### Calucalting cache
 
+ (Documentation tbd.)
+
 ### Calucalting timestamps
+
+ (Documentation tbd.)
+
 
 ## What is Pixelit Server?
 
@@ -109,12 +143,11 @@ Therefore is dependent on functions defined in `pixelit.py`. While you can use `
 
 ### Pixelit Server Features
 * Automatically find, display and cycle all active python scripts using `pixelit.py`
-* Approximate display time for longer messages
 
 
 ### How to setup Pixelit Server
 
-1. Put all your python scripts using pixelit.py into a `./active-apps` directory. You may also just use symbolic links via `ln -s` for that. Also pixelit.py and config.py need to be in this directory. Symbolic links are highly recommended.
+1. Put all your python scripts using pixelit.py into a `./active-apps` directory. You may also just use symbolic links via `ln -s` for that. Also `pixelit.py` and `config.py` need to be in this directory. Symbolic links are highly recommended.
 ```text
 Example stucture of the directory to cycle through dota-led.py and weathercurrent.py:
 
@@ -139,16 +172,17 @@ Example stucture of the directory to cycle through dota-led.py and weathercurren
 
 ### How to create and define apps?
 
-To create and define apps for pixelit and pixelit server you should use functions from pixelit.py
+To create and define apps for pixelit and pixelit server you should use functions from pixelit.py.
 
 What is important here?
-* When sending an app via `pixelit.sendApp()` it not only shows bitmap and text message, but also saves the length of the message via `pixelit.writeCharsToFile()`
-* pixelit-server can read these chars to calculate the display duration for each show message via `calculateDisplayDuration()`. For every call of `pixelit.sendApp()` the amount of characters are saved into a local cache file called `.chars.cache`.
-  * If a message is shorter than the configured `minSecondsPerApp` in `config.py`, then it waits for exactly this duration
-  * If a massage is longer than the configured duration, it calculates the time depending on the length of the message.
-  * If you call an script in your `./active-apps` directory but do not want anything to show, use `pixelit.skipApp()` to signalize skipping the char check and proceeding with the next app. This can be used to skip an app.
+* When sending an app via `pixelit.sendApp()` it not only shows bitmap and text message, but also calculates the length of the message via `pixelit.calculateDisplayDuration()`.
+* If a message is shorter than the configured `minSecondsPerApp` in `config.py`, then it waits for exactly this duration.
+* If a massage is longer than the configured duration, it calculates the time depending on the length of the message.
+* If you call an script in your `./active-apps` directory but do not want anything to show, use `pixelit.skipApp()` to signalize skipping the char check and proceeding with the next app. This can be used to skip an app.
 
 
 
-  * When your message is interrupted by the internal clock display consider setting a higher value in your Pixelit web UI for clock auto fallback time 
+# Debugging
+
+* When your message is interrupted by the internal clock display consider setting a higher value in your Pixelit web UI for clock auto fallback time 
 
