@@ -1,0 +1,4 @@
+*.cache
+*.pyc
+test-pixelit.sh
+config.py
