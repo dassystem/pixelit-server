@@ -31,7 +31,7 @@ Besides of that, one can send text and bitmap messages via REST or MQTT to displ
 
 ## What is pixelit.py?
 
-pixelit.py is a python library aimed to support creating python scripts that send data to display on a pixelit led matrix via REST or MQTT. These scripts does not run on the ESP, but on a seperate machine, like a Raspberry Pi or another kind of server.
+pixelit.py is a python library aimed to support creating python scripts that send data to display on a pixelit led matrix via REST or MQTT. These scripts do not run on the ESP, but on a seperate machine, like a Raspberry Pi or another kind of server.
 
 > :warning:  To use pixelit.py via mqtt you will need a mqtt broker (e.g. mosquitto) in your network. 
 
