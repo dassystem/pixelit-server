@@ -1,5 +1,5 @@
 setup = {
-  'pixelitUrl' : 'http://192.168.178.3', # URL of the microcontroller running pixelit with http://
+  'pixeliturls' : ['http://192.168.178.1','http://192.168.178.2'], # Array of URLs of the microcontroller running pixelit with http://
   'minSecondsPerApp' : 10,      # Minimal display time per app
   'scrollTextDelay' : 38,       # Textspeed
 }

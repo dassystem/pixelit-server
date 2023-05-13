@@ -194,8 +194,10 @@ def sending(senddata):
     #print("[DEBUG] Sending to",topic,"@",broker)
     client1.publish(topic,senddata,qos=QOS)
     client1.loop()
-  else: ## Send via REST 
-    sendurl = config.setup['pixelitUrl'] + '/api/screen'
-    #print("[DEBUG] Sending ",senddata,"to",sendurl)
-    sendheaders = {'Content-Type': 'application/json'}
-    requests.post(url=sendurl, data=senddata.encode('utf-8'), headers=sendheaders)
+  else: ## Send via REST
+    for pixelitUrl in config.setup['pixeliturls']:
+      print(str(pixelitUrl))
+      sendurl = pixelitUrl + '/api/screen'
+      #print("[DEBUG] Sending ",senddata,"to",sendurl)
+      sendheaders = {'Content-Type': 'application/json'}
+      requests.post(url=sendurl, data=senddata.encode('utf-8'), headers=sendheaders)
