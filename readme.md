@@ -19,12 +19,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # pixelit.py and Pixelit Server
 
+
 ## What is Pixelit?
 
 >The PixelIt is an ESP8266 / ESP32 (under construction) and WS2812B-LED based PixelArt display, controlled and fed via a JSON API. Settings and small tests are possible via the web interface, also a node-red node (node-red-contrib-pixelit) for the JSON API is available.
 Source: https://github.com/pixelit-project/PixelIt
 
 Besides of that, one can send text and bitmap messages via REST or MQTT to display on the led matrix. 
+
+![weather](img/pixelit-temp.jpg)
 
 ## What is pixelit.py?
 
@@ -34,18 +37,16 @@ pixelit.py is a python library aimed to support creating python scripts that sen
 
 Imagine you have some python scripts like grabing news from an RSS feed, following you favorite artists Toots on mastodon, showing the current weather or calulating your personal winrate in your favorite MOBA online game. You might want to display all this information on you led matrix. pixelit.py supports you encapsulating the logic from the api, so that you just need to call one pixelit.py function at the end of your custom script.
 
-And hopefully you don't have do dig deep into pixelit.py's code since all important settings are easily accessible in a handy `config.py`.
+And hopefully you don't have do dig too deep into pixelit.py's code since all important settings are easily accessible in a handy `config.py`.
 
+![dota](img/pixelit-dota.jpg)
 
 
 ### pixelit.py features
 
 * Sending text & icons to your pixelit matrix (or multiple!)
-* 
 * Approximate display time for longer messages
 * handling cache (e.g. you don't want to reach an API every single minute for the same result - save it localy!)
-* 
-
 
 #### Example Apps are:
 
@@ -57,12 +58,16 @@ And hopefully you don't have do dig deep into pixelit.py's code since all import
 * Nightscout Bloodsugar Display
 * tatort / Polizeiruf 110 Checker
 
+![pihole](img/pixelit-pihole.jpg)
+
 
 ### Setup pixelit.py via config.py
 
-`config.py` is the central file to change settings according to your needs. pixelit.py and apps will use information saved in this file.
+`config.py` is the central file to change settings according to your needs. `pixelit.py` and apps will use information saved in this file.
 
 > :warning: Please enter one or more URLs of your pixelit controller to get started.
+
+![nightscout](img/pixelit-ns.jpg)
 
 ### Sending Text to Matrix
 
@@ -112,6 +117,8 @@ This functions shares the same arguments as `sendText()` but also has the `icon`
 |`icon`|String|e.g. "[255,255,255,255]"|bitmap description in braces|
 
 For details please also consider https://pixelit-project.github.io/api.html#text
+
+![RSS](img/rss-video.gif)
 
 
 ### `sendNotification()` (not implemented yet)
