@@ -1,6 +1,4 @@
 *.cache
-active-apps/*
 *.pyc
 test-pixelit.sh
-active-apps/__pycache__/*
 config.py
