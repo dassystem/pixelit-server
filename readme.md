@@ -41,9 +41,10 @@ And hopefully you don't have do dig too deep into `pixelit.py`'s code since all 
 
 ### pixelit.py features
 
-* Sending text & icons to your pixelit matrix (or multiple!)
+* Sending text & icons to your pixelit matrix 
+* Handling mutliple PixelIt clients in sync
 * Approximate display time for longer messages
-* handling cache (e.g. you don't want to reach an API every single minute for the same result - save it localy!)
+* handling cache (e.g. you don't want to reach an API every single minute for the same result - save the data localy!)
 
 #### Example Apps are:
 
@@ -163,9 +164,10 @@ Example stucture of the directory to cycle through dota-led.py and weathercurren
 ├── pixelit-server.py    <-- run this
 └── weathercurrent.py    <-- or just run this (to test once)
 ```
-2. Start pixelit- server via `python3 pixelit-server.py` or create a [systemd service](./pixelit.service) for that.
+2. Start pixelit- server via `python3 pixelit-server.py` or create a [systemd service](./pixelit.service) for that. 
    * You might then start and stop this server via `systemctl start|stop|restart|status pixelit.service`.
-3. Be sure that all required python libraries are installed like `requests`, `pickle`, `datetime` and `pytz`.  Depending on your apps you might also need `json`, `feedparser`, `random`, `bs4` and `urllib` and probably more for your own needs.
+   * Please adjust your path in the `.service` file.
+3. Be sure that all required python libraries are installed like `requests`, `pickle`, `threading`, `datetime` and `pytz`.  Depending on your apps you might also need `json`, `feedparser`, `random`, `bs4` and `urllib` and probably more for your own needs.
 
 
 
