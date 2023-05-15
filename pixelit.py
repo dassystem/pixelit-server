@@ -19,6 +19,8 @@ import os
 import datetime
 import pytz
 
+import threading
+
 
 
 """ Helping apps saving data to local cache file """
@@ -196,11 +198,14 @@ def sending(senddata):
     client1.loop()
   else: ## Send via REST
     for pixelitUrl in config.setup['pixeliturls']:
-      try:
-        #print("[DEBUG]",str(pixelitUrl))
-        sendurl = pixelitUrl + '/api/screen'
-        #print("[DEBUG] Sending ",senddata,"to",sendurl)
-        sendheaders = {'Content-Type': 'application/json'}
-        requests.post(url=sendurl, data=senddata.encode('utf-8'), headers=sendheaders)
-      except: 
-        print("[ERROR] Could not reach PixelIt at",pixelitUrl)  
+      # create threads for multiple displays
+      sendthread = threading.Thread(target=sendToOneDisplay, args=(pixelitUrl, senddata))
+      sendthread.start()
+
+def sendToOneDisplay(pixelitUrl,senddata):
+  try:
+    sendurl = pixelitUrl + '/api/screen'
+    sendheaders = {'Content-Type': 'application/json'}
+    requests.post(url=sendurl, data=senddata.encode('utf-8'), headers=sendheaders)
+  except: 
+    print("[ERROR] Could not reach PixelIt at",pixelitUrl)  
