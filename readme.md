@@ -20,23 +20,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # pixelit.py and Pixelit Server
 
 
-## What is Pixelit?
+## What is PixelIt?
 
 >The PixelIt is an ESP8266 / ESP32 (under construction) and WS2812B-LED based PixelArt display, controlled and fed via a JSON API. Settings and small tests are possible via the web interface, also a node-red node (node-red-contrib-pixelit) for the JSON API is available.
-Source: https://github.com/pixelit-project/PixelIt
+(Source: https://github.com/pixelit-project/PixelIt)
 
 Besides of that, one can send text and bitmap messages via REST or MQTT to display on the led matrix. 
 ![pixelit.py combined](img/pixelit-combined.gif)
 
 ## What is pixelit.py?
 
-pixelit.py is a python library aimed to support creating python scripts that send data to display on a pixelit led matrix via REST or MQTT. These scripts do not run on the ESP, but on a seperate machine, like a Raspberry Pi or another kind of server.
+`pixelit.py` is a python library aimed to support creating python scripts that send data to display on a pixelit led matrix via REST or MQTT. These scripts do not run on the ESP, but on a seperate machine, like a Raspberry Pi or another kind of server.
 
 > :warning:  To use pixelit.py via mqtt you will need a mqtt broker (e.g. mosquitto) in your network. 
 
-Imagine you have some python scripts like grabing news from an RSS feed, following you favorite artists Toots on mastodon, showing the current weather or calulating your personal winrate in your favorite MOBA online game. You might want to display all this information on you led matrix. pixelit.py supports you encapsulating the logic from the api, so that you just need to call one pixelit.py function at the end of your custom script.
+Imagine you have some python scripts like grabing news from an RSS feed, following you favorite artist's Toots on mastodon, showing the current weather or calulating your personal winrate in your favorite MOBA online game. You might want to display all this information on your led matrix. `pixelit.py` supports you encapsulating the logic from the api, so that you just need to call one pixelit.py function at the end of your custom script.
 
-And hopefully you don't have do dig too deep into pixelit.py's code since all important settings are easily accessible in a handy `config.py`.
+And hopefully you don't have do dig too deep into `pixelit.py`'s code since all important settings are easily accessible in a handy `config.py`.
+
 
 ### pixelit.py features
 
@@ -54,12 +55,12 @@ And hopefully you don't have do dig too deep into pixelit.py's code since all im
 * Nightscout Bloodsugar Display
 * tatort / Polizeiruf 110 Checker
 
-
 ### Setup pixelit.py via config.py
 
 `config.py` is the central file to change settings according to your needs. `pixelit.py` and apps will use information saved in this file.
 
 > :warning: Please enter one or more URLs of your pixelit controller to get started.
+
 
 ### Sending Text to Matrix
 
@@ -75,13 +76,13 @@ sendText(
    )
 ```
 
-| Parameter | Type | Values | Description |
-|-----------|------|--------|-------------|
-|`text_msg`|String|        |Text to display on the led matrix|
-|`red`, `green` and `blue`| Integer|0-255|values for text color|
-|`bigFont`| Boolean / String | "true" / "false"|Alternates the font|
-|`scrollText`|Boolean / String| "true" / "false" / "auto"| sets scrolling text |
-|`centerText`|String| "true" / "false"| sets text to centered|
+| Parameter                 | Type             | Values                    | Description                       |
+| ------------------------- | ---------------- | ------------------------- | --------------------------------- |
+| `text_msg`                | String           |                           | Text to display on the led matrix |
+| `red`, `green` and `blue` | Integer          | 0-255                     | values for text color             |
+| `bigFont`                 | Boolean / String | "true" / "false"          | Alternates the font               |
+| `scrollText`              | Boolean / String | "true" / "false" / "auto" | sets scrolling text               |
+| `centerText`              | String           | "true" / "false"          | sets text to centered             |
 
 
 For details please also consider https://pixelit-project.github.io/api.html#text.
@@ -104,9 +105,9 @@ For details please also consider https://pixelit-project.github.io/api.html#text
 
 This functions shares the same arguments as `sendText()` but also has the `icon` argument, which needs a bitmap description in braces as String.
 
-| Parameter | Type | Values | Description |
-|-----------|------|--------|-------------|
-|`icon`|String|e.g. "[255,255,255,255]"|bitmap description in braces|
+| Parameter | Type   | Values                   | Description                  |
+| --------- | ------ | ------------------------ | ---------------------------- |
+| `icon`    | String | e.g. "[255,255,255,255]" | bitmap description in braces |
 
 For details please also consider https://pixelit-project.github.io/api.html#text
 
