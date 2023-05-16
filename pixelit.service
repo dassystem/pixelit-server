@@ -5,7 +5,7 @@ After=multi-user.target
 [Service]
 Type=simple
 Restart=always
-ExecStart=/usr/bin/python3 /home/pi/awtrix-scripts/pixelit-server.py
+ExecStart=/usr/bin/python3 /path/to/pixelit-server.py
 
 [Install]
 WantedBy=multi-user.target
