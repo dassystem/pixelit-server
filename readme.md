@@ -34,7 +34,7 @@ Besides of that, one can send text and bitmap messages via REST or MQTT to displ
 
 > :warning:  To use pixelit.py via mqtt you will need a mqtt broker (e.g. mosquitto) in your network. 
 
-Imagine you have some python scripts like grabing news from an RSS feed, following you favorite artist's Toots on mastodon, showing the current weather or calulating your personal winrate in your favorite MOBA online game. You might want to display all this information on your led matrix. `pixelit.py` supports you encapsulating the logic from the api, so that you just need to call one pixelit.py function at the end of your custom script.
+Imagine you have some python scripts like grabing news from an RSS feed, following you favorite artist's Toots on mastodon, showing the current weather or calulating your personal winrate in your favorite MOBA online game. You might want to display all this information on your led matrix. `pixelit.py` supports you encapsulating the logic from the api, so that you just need to call one `pixelit.py` function at the end of your custom script.
 
 And hopefully you don't have do dig too deep into `pixelit.py`'s code since all important settings are easily accessible in a handy `config.py`.
 
@@ -119,17 +119,30 @@ For details please also consider https://pixelit-project.github.io/api.html#text
 
  (Implementation tbd.)
 
+
 ### pixelItSleep(bool=True)
 
- (Documentation tbd.)
+ You can switch off the display (not the controller/client!) via `pixelItSleep(True)`. This affects all pixelIt instances set up in `config.py`.
+
+ To switch on again use `pixelItSleep(False)`.
+
 
 ### skipApp()
 
- (Documentation tbd.)
+ `skipApp()` is used without agruments and tells the script to the display time of the current script to 0. For examples see [jellyfin-trackinfo-led.py](./jellyfin-trackinfo-led.py).
+
+#### Example skipApp()
+
+```python
+if not currently_playing:
+  print("[DEBUG] No device playing.")
+  pixelit.skipApp()
+```
 
 ### Calucalting cache
 
  (Documentation tbd.)
+
 
 ### Calucalting timestamps
 
