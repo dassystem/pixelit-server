@@ -165,21 +165,26 @@ def checkKrimi():
         mytext = "Nächsten So.: " + sendungs_liste[0].getKrimiData()
         if sendungs_liste[0].getRebroadcast():
             mytext = mytext + " (Wdh.)"
+        rebroadcast = True
         #print([DEBUG] mytext)
         #ledmatrix.sendledmatrixApp("tatort", mytext,255,255,255,"yesard","false",1,0,1,9)
     else:
         nextSundayKrimi = False
         mytext = "Nächsten Sonntag läuft kein Tatort/Polizeiruf!"
+        rebroadcast = False
         #print([DEBUG] mytext)
         #ledmatrix.sendledmatrixApp("tatort", mytext,255,255,255,"noard","false",1,0,1,9)
 
-    return nextSundayKrimi, mytext
+    return nextSundayKrimi, mytext, rebroadcast
 
 
-def krimi2ledmatrix(nextSundayKrimi, msg):
+def krimi2ledmatrix(nextSundayKrimi, msg, rebroadcast):
     print("[INFO] Sending to ledmatrix:", msg)
     if nextSundayKrimi:
-        myicon="[693,693,65535,693,693,693,693,693,65535,65535,65535,65535,65535,693,693,693,693,693,65535,693,693,65535,693,693,693,65535,65535,65535,693,693,65535,693,65535,693,65535,693,65535,693,693,65535,693,693,65535,693,693,65535,693,65535,65535,65535,693,65535,65535,65535,65535,65535,693,693,65535,693,693,65535,693,65535]"
+        if rebroadcast:
+            myicon="[0,0,21162,0,0,0,0,0,21162,21162,21162,21162,21162,0,0,0,0,0,21162,0,0,21162,0,0,0,21162,21162,21162,0,0,21162,0,21162,0,21162,0,21162,0,0,21162,0,0,21162,0,0,21162,0,21162,21162,21162,0,21162,21162,21162,21162,21162,0,0,21162,0,0,21162,0,21162]"
+        else:
+            myicon="[693,693,65535,693,693,693,693,693,65535,65535,65535,65535,65535,693,693,693,693,693,65535,693,693,65535,693,693,693,65535,65535,65535,693,693,65535,693,65535,693,65535,693,65535,693,693,65535,693,693,65535,693,693,65535,693,65535,65535,65535,693,65535,65535,65535,65535,65535,693,693,65535,693,693,65535,693,65535]"
     else: #no tatort - sad icon
         myicon="[693,693,65535,693,693,693,693,693,65535,63488,65535,65535,65535,693,693,63488,693,693,63488,693,693,65535,63488,693,693,65535,65535,63488,693,63488,65535,693,65535,693,65535,693,63488,693,693,65535,693,693,65535,63488,693,63488,693,65535,65535,65535,63488,65535,65535,65535,63488,65535,693,63488,65535,693,693,65535,693,63488]"
     pixelit.sendApp(text_msg=msg,
@@ -195,14 +200,14 @@ def krimi2ledmatrix(nextSundayKrimi, msg):
 if __name__ == "__main__":
     myappname="tatort"
     if pixelit.exceedsTimeLimit(myappname,config.tatort['fechtEveryMinutes']):
-        nextSundayKrimi, msg = checkKrimi()   #get all data
-        krimi2ledmatrix(nextSundayKrimi, msg)    #send data to ledmatrix
+        nextSundayKrimi, msg, rebroadcast = checkKrimi()   #get all data
+        krimi2ledmatrix(nextSundayKrimi, msg,rebroadcast)    #send data to ledmatrix
     else:
       try:
         data=pixelit.readDataFromFile(myappname)
       except:
-        nextSundayKrimi, msg = checkKrimi()   #get all data
-        krimi2ledmatrix(nextSundayKrimi, msg)    #send data to ledmatrix
+        nextSundayKrimi, msg, rebroadcast = checkKrimi()   #get all data
+        krimi2ledmatrix(nextSundayKrimi, msg,rebroadcast)    #send data to ledmatrix
 
 def testing():
     print("testing")
