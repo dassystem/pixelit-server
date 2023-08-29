@@ -159,13 +159,13 @@ def checkKrimi():
         sendungs_liste)
 
     sendungs_liste.sort(key=operator.attrgetter('date'))  # (key=sortByDate)
-
     if (len(sendungs_liste) > 0):
         nextSundayKrimi = True
         mytext = "Nächsten So.: " + sendungs_liste[0].getKrimiData()
         if sendungs_liste[0].getRebroadcast():
             mytext = mytext + " (Wdh.)"
-        rebroadcast = True
+            rebroadcast = True
+        rebroadcast = False #default
         #print([DEBUG] mytext)
         #ledmatrix.sendledmatrixApp("tatort", mytext,255,255,255,"yesard","false",1,0,1,9)
     else:
@@ -182,8 +182,11 @@ def krimi2ledmatrix(nextSundayKrimi, msg, rebroadcast):
     print("[INFO] Sending to ledmatrix:", msg)
     if nextSundayKrimi:
         if rebroadcast:
+            print("WDH:" ,rebroadcast)
+            # is rebroadcast
             myicon="[0,0,21162,0,0,0,0,0,21162,21162,21162,21162,21162,0,0,0,0,0,21162,0,0,21162,0,0,0,21162,21162,21162,0,0,21162,0,21162,0,21162,0,21162,0,0,21162,0,0,21162,0,0,21162,0,21162,21162,21162,0,21162,21162,21162,21162,21162,0,0,21162,0,0,21162,0,21162]"
         else:
+            #has fresh tatort 
             myicon="[693,693,65535,693,693,693,693,693,65535,65535,65535,65535,65535,693,693,693,693,693,65535,693,693,65535,693,693,693,65535,65535,65535,693,693,65535,693,65535,693,65535,693,65535,693,693,65535,693,693,65535,693,693,65535,693,65535,65535,65535,693,65535,65535,65535,65535,65535,693,693,65535,693,693,65535,693,65535]"
     else: #no tatort - sad icon
         myicon="[693,693,65535,693,693,693,693,693,65535,63488,65535,65535,65535,693,693,63488,693,693,63488,693,693,65535,63488,693,693,65535,65535,63488,693,63488,65535,693,65535,693,65535,693,63488,693,693,65535,693,693,65535,63488,693,63488,693,65535,65535,65535,63488,65535,65535,65535,63488,65535,693,63488,65535,693,693,65535,693,63488]"
