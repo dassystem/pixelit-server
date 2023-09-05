@@ -65,4 +65,5 @@ if __name__ == "__main__":
   while True:
     for i in appLoop.getApplist():
       subprocess.call(i.getPath()) #calling individual .py scripts
+      print("\n Advancing to next app \n")
 

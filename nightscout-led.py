@@ -182,4 +182,4 @@ if __name__ == "__main__":
 
   # If everything goes well, send all data to  server
   sendGlucose(glucose, r_color, g_color, b_color, iconnumber)
-  print(glucose)
+  #print(glucose)

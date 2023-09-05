@@ -138,8 +138,8 @@ if __name__ == "__main__":
       for item in newsitems:
         single_newslist.append(item)
     # Testing
-    for item in single_newslist:
-      print("[DEBUG]",item.getSource(),item.getTitle())
+   # for item in single_newslist:
+   #   print("[DEBUG]",item.getSource(),item.getTitle())
     print("[DEBUG] Total amount of news entries:",len(single_newslist))
     print("[Debug] writing new data to cache")
     pixelit.writeDataToFile(single_newslist,myappname)
@@ -147,8 +147,8 @@ if __name__ == "__main__":
   else:
     print("[DEBUG] Loading news from cache")
     full_newslist=pixelit.readDataFromFile(myappname)
-    for item in full_newslist:
-      print("[DEBUG]",item.getSource(),item.getTitle())
+    #for item in full_newslist:
+    #  print("[DEBUG]",item.getSource(),item.getTitle())
 
   
   # get random news and send to pixelit      
