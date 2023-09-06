@@ -17,6 +17,10 @@ sendheaders = {'Content-Type': 'application/json',
                'x-emby-token': config.jellyfin['apikey'],
                }
 
+# TODO: Build try catch 
+    # if jellyfin is not reachable.
+    # then skip the entire app (instead of crashing)
+
 # Check for devices that have checked in in the last 90 seconds
 devices = requests.get(
     config.jellyfin['url'] +
