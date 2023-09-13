@@ -76,7 +76,7 @@ def getDetailUrl(number, myurl):
 
   # find DetailURL
     for link in plainHTML.find_all('a'):
-        if link.get('href').find(number) != -1:
+        if link.get('href').find("/folgen/"+number) != -1:
             suburl = link.get('href')
             fullurl = "https://www.fernsehserien.de"+suburl
             logging.debug("Found", fullurl)
@@ -131,7 +131,7 @@ def findEvents(myurl, series, sendungs_liste):
                 krimi_date = krimi_date.contents[0]
                 krimi_number = onAir.find(
                     class_='sendetermine-2019-staffel-und-episode').contents[0]
-                # print("number",krimi_number)
+                #print("number",krimi_number)
                 krimi_serie = series
 
                 # Check for Rebroadcast:
@@ -162,10 +162,10 @@ def checkKrimi():
     if (len(sendungs_liste) > 0):
         nextSundayKrimi = True
         mytext = "Nächsten So.: " + sendungs_liste[0].getKrimiData()
+        rebroadcast = False #default
         if sendungs_liste[0].getRebroadcast():
             mytext = mytext + " (Wdh.)"
             rebroadcast = True
-        rebroadcast = False #default
         #print([DEBUG] mytext)
         #ledmatrix.sendledmatrixApp("tatort", mytext,255,255,255,"yesard","false",1,0,1,9)
     else:
