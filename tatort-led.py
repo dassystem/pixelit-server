@@ -74,13 +74,18 @@ def getDetailUrl(number, myurl):
     html = rawdata.content
     plainHTML = BeautifulSoup(html, 'html.parser')
 
+    #testing
+    #print(number, myurl)
+
   # find DetailURL
-    for link in plainHTML.find_all('a'):
-        if link.get('href').find("/folgen/"+number) != -1:
-            suburl = link.get('href')
-            fullurl = "https://www.fernsehserien.de"+suburl
-            logging.debug("Found", fullurl)
-            return (fullurl)
+    for link in plainHTML.findAll('a'):
+        if link.get('href') is not None:
+            #print("[Debug] Found link:"", link.get('href')) ## <--- needs to be /folgen
+            if link.get('href').find("/folgen/"+number) != -1:
+                suburl = link.get('href')
+                fullurl = "https://www.fernsehserien.de"+suburl
+                logging.debug("Found", fullurl)
+                return (fullurl)
 
 
 def getfirstAired(detailUrl):
