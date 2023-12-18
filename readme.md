@@ -180,9 +180,11 @@ Example stucture of the directory to cycle through dota-led.py and weathercurren
 2. Start pixelit- server via `python3 pixelit-server.py` or create a [systemd service](./pixelit.service) for that. 
    * You might then start and stop this server via `systemctl start|stop|restart|status pixelit.service`.
    * Please adjust your path in the `.service` file.
+
 3. Be sure that all required python libraries are installed like `requests`, `pickle`, `threading`, `datetime` and `pytz`.  Depending on your apps you might also need `json`, `feedparser`, `random`, `bs4` and `urllib` and probably more for your own needs.
 
 
+> :warning: Remember to restart your server / service after adding or removing files in the `active-apps` directory.
 
 
 ### How to create and define apps?
