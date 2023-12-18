@@ -1,6 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+# This app checks if there is a tatort / polizeiruf on next sunday on ARD.
+# It also checks for the latest event on that day.
+
+
 import requests
 import datetime
 from datetime import date
