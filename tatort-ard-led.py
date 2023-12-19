@@ -19,7 +19,7 @@ def scrapHTML(myurl):
     soup = BeautifulSoup(html, 'html.parser')
     # get sendetermine-2019-wochentag
     return soup.find_all(
-        True, {'class': ['contentStageCon']})
+        True, {'class': ['topTeaser']})
 
 def sortByDate(data):
     return data['date']
@@ -41,38 +41,62 @@ def krimi2ledmatrix(msg):
                     )
 
 def checktatort():
+    #TODO: Get tatort / polizeiruf series. Need to check the headline class_: 'conHeadline' and search for "Tatort" or "Polizeiruf: 110"
     tatorturl="https://www.daserste.de/unterhaltung/krimi/tatort/vorschau/index.html"
-    nextDate = getTatortdate(tatorturl)
-    print("Date:", nextDate)
-    nextTitle= getTatorttitle(tatorturl)
-    print("Title:", nextTitle)
+    rawhtml = scrapHTML(tatorturl)
+    nextDate = getTatortdate(rawhtml)
+    #print("Date:", nextDate)
+    nextTitle= getTatorttitle(rawhtml)
+    #print("Title:", nextTitle)
+    nextSeriesName=getSeriesname(rawhtml)
+    return nextSeriesName, nextTitle, nextDate
 
-    return nextTitle, nextDate
 
-def getTatortdate(url):
-    output = scrapHTML(url)
-    for onAir in output:
+def getTatortdate(html):
+    for onAir in html:
         tatortdate=onAir.find(class_='dachzeile')
-        #print(tatortdate)
         tatortdate = BeautifulSoup(str(tatortdate),'html.parser')
         tatortdate = tatortdate.text.strip()
-        #tatortdate=BeautifulSoup.font.contents(tatortdate, 'html.parse').text
     return tatortdate
     
-def getTatorttitle(url):
-    output = scrapHTML(url)
-    for onAir in output:
+def getTatorttitle(html):
+    for onAir in html:
         tatorttitle=onAir.find(class_='headline')
-        #print(tatortdate)
         tatorttitle = BeautifulSoup(str(tatorttitle),'html.parser')
         tatorttitle = tatorttitle.text.strip()
-        #tatortdate=BeautifulSoup.font.contents(tatortdate, 'html.parse').text
     return tatorttitle   
 
+def getSeriesname(html):
+    seriesName=""
+    for onAir in html:
+        seriesName =onAir.find(class_='conHeadline')
+        seriesName =BeautifulSoup(str(seriesName),'html.parser')
+        seriesName = seriesName.text.strip()
+        #print(seriesName)
+
+    if seriesName.find("Polizeiruf") !=-1:
+      #print("Polizeiruf")
+      return "Polizeiruf"
+    elif seriesName.find("Tatort") !=-1:
+      #print("Tatort")
+      return "Tatort"
+    else:
+      print("[ERROR] KEIN SERIENNAME GEFUNDEN!")
+      return "KEIN SERIENNAME GEFUNDEN"   
 
 if __name__ == "__main__":
-    myappname="tatort"
-    myTitle,myTime = checktatort()
+    myappname="tatortARD"
 
-    msg ="Nächster Krimi: »" + str(myTitle) + "« am " + str(myTime)
-    krimi2ledmatrix(msg)
+    if pixelit.exceedsTimeLimit(myappname,config.tatort['fechtEveryMinutes']):
+        mySeries,myTitle,myTime = checktatort()
+        msg ="Nächster "+ str(mySeries) + ": »" + str(myTitle) + "« am " + str(myTime)
+        krimi2ledmatrix(msg)
+    else:
+      try:
+        data=pixelit.readDataFromFile(myappname)
+      except:
+        mySeries,myTitle,myTime = checktatort()
+        msg ="Nächster "+ str(mySeries) + ": »" + str(myTitle) + "« am " + str(myTime)
+        krimi2ledmatrix(msg)
+
+    
