@@ -29,8 +29,8 @@ class AppLoop:
 
   def printApps(self):
     print("[INFO] SERVER found",len(self.applist),"apps:")
-    for i in self.applist:
-      print("[INFO] SERVER", i.getAppname(),": in",i.getPath())
+    for index, app in enumerate(self.applist):
+      print("[INFO] SERVER: App #"+str(index), app.getAppname(),": in",app.getPath())
 
   def add(self, newApp):
     self.applist.append(newApp)
@@ -64,6 +64,7 @@ if __name__ == "__main__":
   
   while True:
     for i in appLoop.getApplist():
+      ## TODO: Do with try catch so server does not crash when subprocess fails
       subprocess.call(i.getPath()) #calling individual .py scripts
-      print("\n Advancing to next app \n")
+      print("\n[DEBUG] Advancing to next app \n")
 
