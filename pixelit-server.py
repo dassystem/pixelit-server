@@ -29,7 +29,7 @@ class AppLoop:
 
   def printApps(self):
     print("[INFO] SERVER found",len(self.applist),"apps:")
-    for index, app in enumerate(self.applist):
+    for index, app in enumerate(self.applist, start=1):
       print("[INFO] SERVER: App #"+str(index), app.getAppname(),": in",app.getPath())
 
   def add(self, newApp):
