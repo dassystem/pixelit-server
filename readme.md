@@ -137,16 +137,47 @@ For details please also consider https://pixelit-project.github.io/api.html#text
 if not currently_playing:
   print("[DEBUG] No device playing.")
   pixelit.skipApp()
+
+
 ```
+### Calucalting timestamps
+
+For that purpose `pixelit.py` provides `exceedsTimeLimit(appname,timeLimitMinutes)` method to save, load and check timestamp information. Internally objects are saved to a local dot-file using the `pickle` library.
+
+As reference implementation see this commented example from `dota-led.py` usning both methods:
+
+```python
+  myappname="dota" # define an app name that will also be used for a file name for the timestamp and data cache.
+  
+  if pixelit.exceedsTimeLimit(myappname,60): 
+    […]
+```
+The method checks for given app name and given minutes if a timelimit is exceeded in relation to the timestamp read from appname-timestamp.cache file. If not existing already the file will be created and considered as exceedsTimeLimit = true. The value for the minutes can be setup in the .config file and used as in `pixelit.exceedsTimeLimit(myappname,config.dota['fechtEveryMinutes'])`.
+
+
 
 ### Calucalting cache
 
- (Documentation tbd.)
+You might want to save data from a script into a local cache file so you don't have to create it everytime the LED display shows information. This is especially helpful when gathering data from the internet (e.g. scraping websites or feeds) or having complex and timeconsuming calculations. You probably don't want this to be recalculated every couple for minutes.
 
+For that purpose `pixelit.py` provides `writeDataToFile(data,appname)` and `readDataToFile(appname)` methods to save and load information. Internally objects are saved to a local dot-file using the `pickle` library.
 
-### Calucalting timestamps
+As reference implementation see this commented example from `dota-led.py` usning both methods:
 
- (Documentation tbd.)
+```python
+  myappname="dota" # define an app name that will also be used for a file name for the timestamp and data cache.
+  
+  if pixelit.exceedsTimeLimit(myappname,config.dota['fechtEveryMinutes']): # if a certain time since the last calculation has passd
+    data=calcWinrate(getOpenDotaData()) # then freshly caclulate the data 
+    pixelit.writeDataToFile(data,myappname) # and write the fresh data to cache file
+  else: #else means: we don't want do recalculate yet but load data from cache
+    try:
+      data=pixelit.readDataFromFile(myappname) #read data from cache
+    except:
+      data=calcWinrate(getOpenDotaData()) # if errors occure just calculate fresh data
+      pixelit.writeDataToFile(data,myappname)
+   showWinrate(data) # use the result either from cache or frehsly calculated
+```
 
 
 ## What is Pixelit Server?
