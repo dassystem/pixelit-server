@@ -161,27 +161,30 @@ Therefore is dependent on functions defined in `pixelit.py`. While you can use `
 
 ### How to setup Pixelit Server
 
-1. Put all your python scripts using pixelit.py into a `./active-apps` directory. You may also just use symbolic links via `ln -s` for that. Also `pixelit.py` and `config.py` need to be in this directory. Symbolic links are highly recommended.
+1. Put all your python scripts using pixelit.py into a `./active-apps` directory. You may also just use symbolic links via `ln -s` for that. Symbolic links are highly recommended.
 ```text
 Example stucture of the directory to cycle through dota-led.py and weathercurrent.py:
 
 .
-├── active-apps
-│   ├── config.py -> ../config.py
-│   ├── dota-led.py -> ../dota-led.py
-│   ├── pixelit.py -> ../pixelit.py
-│   └── weathercurrent.py -> ../weathercurrent.py
 ├── config.py
-├── dota-led.py
 ├── pixelit.py
 ├── pixelit-server.py    <-- run this
-└── weathercurrent.py    <-- or just run this (to test once)
+├── available-apps
+│   ├── dota-led.py 
+│   ├── pihole-led.py 
+│   └── weathercurrent.py <-- or just run this (to test once)
+├── active-apps
+│   ├── dota-led.py -> ../available-apps/pihole-led.pyy
+│   └── weathercurrent.py -> ../available-apps/weathercurrent.py
 ```
-2. Start pixelit- server via `python3 pixelit-server.py` or create a [systemd service](./pixelit.service) for that. 
+> :warning: From 2023-12-20 on all apps in `active-apps` or `available-apps` directory need to have `config.py` and `pixelit.py` in the parent directory (main direcotry).
+
+
+1. Start pixelit- server via `python3 pixelit-server.py` or create a [systemd service](./pixelit.service) for that. 
    * You might then start and stop this server via `systemctl start|stop|restart|status pixelit.service`.
    * Please adjust your path in the `.service` file.
 
-3. Be sure that all required python libraries are installed like `requests`, `pickle`, `threading`, `datetime` and `pytz`.  Depending on your apps you might also need `json`, `feedparser`, `random`, `bs4` and `urllib` and probably more for your own needs.
+2. Be sure that all required python libraries are installed like `requests`, `pickle`, `threading`, `datetime` and `pytz`.  Depending on your apps you might also need `json`, `feedparser`, `random`, `bs4` and `urllib` and probably more for your own needs.
 
 
 > :warning: Remember to restart your server / service after adding or removing files in the `active-apps` directory.
@@ -203,3 +206,9 @@ What is important here?
 
 * When your message is interrupted by the internal clock display consider setting a higher value in your Pixelit web UI for clock auto fallback time 
 
+
+
+# Changelog
+
+* 2023-12-20: Changed file and directory structure to maintain a cleaner project. See "How to setup Pixelit Server" section.
+  
