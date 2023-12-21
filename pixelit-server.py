@@ -64,7 +64,11 @@ if __name__ == "__main__":
   
   while True:
     for i in appLoop.getApplist():
-      ## TODO: Do with try catch so server does not crash when subprocess fails
-      subprocess.call(i.getPath()) #calling individual .py scripts
-      print("\n[DEBUG] Advancing to next app \n")
+      try:
+        subprocess.call(i.getPath()) #calling individual .py scripts
+        print("\n[DEBUG] Advancing to next app \n")
+      except subprocess.CalledProcessError as err:
+        print("[ERROR] Something happend calling an app in the active-apps directory.")
+      except PermissionError:
+        print("[ERROR] No permission for",str(i.getPath()),"Is this correctly encoded python script?")
 
