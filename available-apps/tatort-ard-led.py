@@ -3,9 +3,10 @@
 
 import requests
 import datetime
-from datetime import date
+from datetime import datetime
 from bs4 import BeautifulSoup
 import logging
+import locale
 
 
 # Import pixelit related libs and config from parent directory
@@ -26,6 +27,14 @@ def scrapHTML(myurl):
 
 def sortByDate(data):
     return data['date']
+
+def dateConvert(oldDate):
+    #In: Mo., 01.01. | 20:15 Uhr
+    locale.setlocale(locale.LC_ALL, 'de_DE.utf8')
+    newDate=datetime.strptime(oldDate,'%a., %d.%m. | %H:%M Uhr')
+    #print(type(newDate))
+    #print(newDate)
+    return newDate
 
 
 
@@ -60,6 +69,8 @@ def getTatortdate(html):
         tatortdate=onAir.find(class_='dachzeile')
         tatortdate = BeautifulSoup(str(tatortdate),'html.parser')
         tatortdate = tatortdate.text.strip()
+        tatortdate = dateConvert(tatortdate)
+        tatortdate = tatortdate.strftime("%a. %d.%m. %H:%M Uhr")
     return tatortdate
     
 def getTatorttitle(html):
