@@ -18,12 +18,15 @@ def getAdsBlockedToday():
   piholeurl= config.pihole['url']+'/admin/api.php?summary&auth='+config.pihole['apitoken']
   #print("[DEBUG]" Pi-Hole URL:, piholeurl)
 
-  piholedata = json.loads(requests.get(url=piholeurl,headers=sendheaders).content.decode("utf-8"))
-
-  out=piholedata["ads_blocked_today"]
-  out=out.replace(",", ".") #decimal comma
-  return out
-
+  try:
+    piholedata = json.loads(requests.get(url=piholeurl,headers=sendheaders).content.decode("utf-8"))
+    out=piholedata["ads_blocked_today"]
+    out=out.replace(",", ".") #decimal comma
+    return out
+  except:
+    print("[ERROR] Could not reach pi hole URL under", config.pihole['url'])
+    pixelit.skipApp()
+    quit()
 
 
 def send2matrix(printtext): 
