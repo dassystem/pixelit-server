@@ -87,9 +87,10 @@ def sendTo(myNews):
 def url2news(newsFeed): #old getNews()
   """Transform a URL to a News Object and return it"""
   myUrl=newsFeed.getUrl()
-
-  myFeeds = feedparser.parse(myUrl)
-  
+  try:
+    myFeeds = feedparser.parse(myUrl)
+  except:
+    print("[ERROR] Could not grab feeds from", myUrl)  
   newsitems=[]
   itemcount = 0
   maxNewsPerFeed = config.rssnews['itemsPerFeed'] #count of items per feed to grab
@@ -141,8 +142,8 @@ if __name__ == "__main__":
       for item in newsitems:
         single_newslist.append(item)
     # Testing
-   # for item in single_newslist:
-   #   print("[DEBUG]",item.getSource(),item.getTitle())
+    for item in single_newslist:
+      print("[DEBUG]",item.getSource(),item.getTitle())
     print("[DEBUG] Total amount of news entries:",len(single_newslist))
     print("[Debug] writing new data to cache")
     pixelit.writeDataToFile(single_newslist,myappname)
@@ -153,8 +154,10 @@ if __name__ == "__main__":
     #for item in full_newslist:
     #  print("[DEBUG]",item.getSource(),item.getTitle())
 
-  
-  # get random news and send to pixelit      
-  randomNews=random.choice(full_newslist)
-  print("[INFO] Sending ("+randomNews.getSource()+") »",randomNews.getTitle(),"« to LED-Matrix")
-  sendTo(randomNews)
+  if full_newslist:
+    # get random news and send to pixelit      
+    randomNews=random.choice(full_newslist)
+    print("[INFO] Sending ("+randomNews.getSource()+") »",randomNews.getTitle(),"« to LED-Matrix")
+    sendTo(randomNews)
+  else:
+    print("[ERROR] Newslist is empty")

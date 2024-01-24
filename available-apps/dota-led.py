@@ -14,15 +14,24 @@ import config
 def getOpenDotaData():
   sendheaders = {'Content-Type': 'application/json'}
   playerwin= 'https://api.opendota.com/api/players/'+str(config.dota['player'])+'/wl?date='+str(config.dota['days'])+'&game_mode='+str(config.dota['gamemode'])
-  windata = requests.get(url=playerwin,headers=sendheaders)
-  return(windata)
+  try:
+    windata = requests.get(url=playerwin,headers=sendheaders)
+    return(windata)
+  except: 
+    print("[Error] Cannot connect to opendota")
+    pixelit.skipApp()
+    quit()
 
 def getAllOpenDotaData():
   sendheaders = {'Content-Type': 'application/json'}
   playerwin= 'https://api.opendota.com/api/players/'+str(config.dota['player'])+'/matches?date='+str(config.dota['days'])
-  windata = requests.get(url=playerwin,headers=sendheaders)
-  return(windata)
-
+  try:
+    windata = requests.get(url=playerwin,headers=sendheaders)
+    return(windata)
+  except: 
+    print("[Error] Cannot connect to opendota")
+    pixelit.skipApp()
+    quit()
 
 
 def calcWinrate(windata):

@@ -45,12 +45,15 @@ def getWeatherObjects():
   appid = str(config.weather['apikey'])
 
   url_today = "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=current,minutely,hourly,alerts&appid="+appid+"&units=metric"
-  
+  try:
     # Get weather objects
-  weatherdata_today=weatherObject(today,getWeatherData(url_today))
-  weatherdata_today.getTemp()
-  
-  return weatherdata_today
+    weatherdata_today=weatherObject(today,getWeatherData(url_today))
+    weatherdata_today.getTemp()
+    return weatherdata_today
+  except: 
+    print("[ERROR] Not connecting to openweathermap")
+    pixelit.skipApp()
+    quit()
 
 if __name__ == "__main__":
   myappname="weather"
