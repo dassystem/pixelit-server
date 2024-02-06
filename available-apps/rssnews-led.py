@@ -6,12 +6,14 @@ import random
 import feedparser
 import datetime
 import pytz
+import requests
 
 # Import pixelit related libs and config from parent directory
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import pixelit
 import config
+
 
 
 
@@ -84,13 +86,20 @@ def sendTo(myNews):
      centerText="false",
      )
 
-def url2news(newsFeed): #old getNews()
+def url2news(newsFeed):
   """Transform a URL to a News Object and return it"""
   myUrl=newsFeed.getUrl()
+  #from https://stackoverflow.com/questions/9772691/feedparser-with-timeout
   try:
-    myFeeds = feedparser.parse(myUrl)
+    myFeeds = requests.get(myUrl, timeout = 10)
+  except requests.ReadTimeout:
+    print("[ERROR] timeout grabbing feeds from", myUrl)
   except:
     print("[ERROR] Could not grab feeds from", myUrl)  
+
+  myFeeds = BytesIO(myFeeds.content)
+  myFeeds = feedparser.parse(myFeeds)
+
   newsitems=[]
   itemcount = 0
   maxNewsPerFeed = config.rssnews['itemsPerFeed'] #count of items per feed to grab
@@ -142,10 +151,10 @@ if __name__ == "__main__":
       for item in newsitems:
         single_newslist.append(item)
     # Testing
-    for item in single_newslist:
-      print("[DEBUG]",item.getSource(),item.getTitle())
+    #for item in single_newslist:
+    #  print("[DEBUG]",item.getSource(),item.getTitle())
     print("[DEBUG] Total amount of news entries:",len(single_newslist))
-    print("[Debug] writing new data to cache")
+    print("[DEBUG] writing new data to cache")
     pixelit.writeDataToFile(single_newslist,myappname)
     full_newslist=single_newslist
   else:
