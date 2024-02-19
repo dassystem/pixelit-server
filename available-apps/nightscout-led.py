@@ -34,7 +34,7 @@ def testUrl(url):
                     icon="[0,0,0,0,0,0,0,0,0,63488,63488,0,0,63488,63488,0,63488,63488,63488,63488,63488,63488,63488,63488,63488,63488,63488,63488,63488,63488,63488,63488,63488,63488,63488,63488,63488,63488,63488,63488,0,63488,63488,63488,63488,63488,63488,0,0,0,63488,63488,63488,63488,0,0,0,0,0,63488,63488,0,0,0]",
                     bigFont="false",
                     scrollText="auto",
-                    centerText="false",
+                    centerText="true",
                     )
     quit() #hardquit on error
 
@@ -49,7 +49,7 @@ def sendGlucose(glucose,r_color=255, g_color=255, b_color=255, iconnumber=1037):
      icon=iconnumber,
      bigFont="false",
      scrollText="auto",
-     centerText="false",
+     centerText="true",
      )
   print("[INFO]","Send",str(glucose),"to Matrix")
 

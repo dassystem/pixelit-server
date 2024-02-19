@@ -127,7 +127,7 @@ def sendNotification(text_msg,red=255,green=255,blue=255,icon=111,bigFont="false
   sendApp(text_msg,red,green,blue,icon,bigFont,scrollText,centerText)
 
 """sending text without bitmap """
-def sendText(text_msg="Hello World",red=255,green=255,blue=255,bigFont="false",scrollText='auto',centerText="false"):
+def sendText(text_msg="Hello World",red=255,green=255,blue=255,bigFont="false",scrollText='auto',centerText="true"):
   senddata = '{ \
         "text": { \
           "textString": " '+text_msg+'",\
@@ -136,7 +136,7 @@ def sendText(text_msg="Hello World",red=255,green=255,blue=255,bigFont="false",s
           "scrollTextDelay": '+scrollTextDelay+',\
           "centerText": '+centerText+',\
           "position": {\
-            "x" : 0,\
+            "x" : 1,\
             "y" : 1\
           },\
           "color": {\
@@ -152,7 +152,7 @@ def sendText(text_msg="Hello World",red=255,green=255,blue=255,bigFont="false",s
 
 
 
-def sendApp(text_msg="Hello World",red=255,green=255,blue=255,icon="[255]",bigFont="false",scrollText='auto',centerText="false"):
+def sendApp(text_msg="Hello World",red=255,green=255,blue=255,icon="[255]",bigFont="false",scrollText='auto',centerText="true"):
   senddata = '{ \
         "bitmap": {\
           "data": '+icon+',\
