@@ -23,7 +23,7 @@ def scrapHTML(myurl):
     soup = BeautifulSoup(html, 'html.parser')
     # get sendetermine-2019-wochentag
     return soup.find_all(
-        True, {'class': ['topTeaser']})
+        True, {'class': ['topTeaser']},limit=1) #stop after first encounter
 
 def sortByDate(data):
     return data['date']
@@ -57,6 +57,7 @@ def checktatort():
     tatorturl="https://www.daserste.de/unterhaltung/krimi/tatort/vorschau/index.html"
     try: 
       rawhtml = scrapHTML(tatorturl)
+      print(rawhtml)
       nextDate = getTatortdate(rawhtml)
       #print("Date:", nextDate)
       nextTitle= getTatorttitle(rawhtml)
