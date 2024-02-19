@@ -57,7 +57,6 @@ def checktatort():
     tatorturl="https://www.daserste.de/unterhaltung/krimi/tatort/vorschau/index.html"
     try: 
       rawhtml = scrapHTML(tatorturl)
-      print(rawhtml)
       nextDate = getTatortdate(rawhtml)
       #print("Date:", nextDate)
       nextTitle= getTatorttitle(rawhtml)
@@ -95,7 +94,7 @@ def getSeriesname(html):
 
     if seriesName.find("Polizeiruf") !=-1:
       #print("Polizeiruf")
-      return "Polizeiruf"
+      return "Polizeiruf 110"
     elif seriesName.find("Tatort") !=-1:
       #print("Tatort")
       return "Tatort"
