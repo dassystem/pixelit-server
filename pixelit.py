@@ -135,9 +135,9 @@ def sendText(text_msg="Hello World",red=255,green=255,blue=255,bigFont="false",s
           "scrollText": "'+scrollText+'",\
           "scrollTextDelay": '+scrollTextDelay+',\
           "centerText": '+centerText+',\
-          "positon": {\
+          "position": {\
             "x" : 0,\
-            "y" : 0\
+            "y" : 1\
           },\
           "color": {\
             "r": "'+str(red)+'",\
@@ -171,9 +171,9 @@ def sendApp(text_msg="Hello World",red=255,green=255,blue=255,icon="[255]",bigFo
           "scrollText": "'+scrollText+'",\
           "scrollTextDelay": '+scrollTextDelay+',\
           "centerText": '+centerText+',\
-          "positon": {\
-            "x" : 0,\
-            "y" : 0\
+          "position": {\
+            "x" : 1,\
+            "y" : 1\
           },\
           "color": {\
             "r": "'+str(red)+'",\
