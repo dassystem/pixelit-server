@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 #
 # This is a helper library for sending information to pixelit LED matrix
 #
