@@ -187,38 +187,31 @@ While the pixelit platform can only handle single calls via MQTT or REST, Pixeli
 Therefore is dependent on functions defined in `pixelit.py`. While you can use `pixelit.py` on its own, the server always needs interaction with pixelit.py functions.
 
 ### Pixelit Server Features
-* Automatically find, display and cycle all active python scripts using `pixelit.py`
+* Display and cycle all configured python scripts ("Apps") using `pixelit.py`
 
 
 ### How to setup Pixelit Server
 
-1. Put all your python scripts using pixelit.py into a `./active-apps` directory. You may also just use symbolic links via `ln -s` for that. Symbolic links are highly recommended.
-```text
-Example stucture of the directory to cycle through dota-led.py and weathercurrent.py:
+> :warning: From 2024-04-02 on all apps need to be configured in `config.py`
 
-.
-├── config.py
-├── pixelit.py
-├── pixelit-server.py    <-- run this
-├── available-apps
-│   ├── dota-led.py 
-│   ├── pihole-led.py 
-│   └── weathercurrent.py <-- or just run this (to test once)
-├── active-apps
-│   ├── dota-led.py -> ../available-apps/pihole-led.pyy
-│   └── weathercurrent.py -> ../available-apps/weathercurrent.py
+1. In `config.py` add all the names and paths (absolute paths recommended) to a list in the "apps" section. E.g.:
 ```
-> :warning: From 2023-12-20 on all apps in `active-apps` or `available-apps` directory need to have `config.py` and `pixelit.py` in the parent directory (main direcotry).
-
-
-1. Start pixelit- server via `python3 pixelit-server.py` or create a [systemd service](./pixelit.service) for that. 
+apps = {
+  'clock' : './available-apps/clock-led.py',
+  'app2'  : '/my/other/path/app2.py'
+}
+```
+2. Start pixelit- server via `python3 pixelit-server.py` or create a [systemd service](./pixelit.service) for that. 
    * You might then start and stop this server via `systemctl start|stop|restart|status pixelit.service`.
    * Please adjust your path in the `.service` file.
 
-2. Be sure that all required python libraries are installed like `requests`, `pickle`, `threading`, `datetime` and `pytz`.  Depending on your apps you might also need `json`, `feedparser`, `random`, `bs4` and `urllib` and probably more for your own needs.
+3. Be sure that all required python libraries are installed like `requests`, `pickle`, `threading`, `datetime` and `pytz`.  Depending on your apps you might also need `json`, `feedparser`, `random`, `bs4` and `urllib` and probably more for your own needs.
 
 
 > :warning: Remember to restart your server / service after adding or removing files in the `active-apps` directory.
+
+
+You can add as many apps in your `config.py`, as you want. You can also add the same app multiple times, but make sure to give them unique names (e.g. "clock1", "clock2") to have them mutiple times in your apploop.
 
 
 ### How to create and define apps?
@@ -241,5 +234,6 @@ What is important here?
 
 # Changelog
 
+* 2024-04-02: Changed app discovery to config.py instead of having it in a defined directory structure.
 * 2023-12-20: Changed file and directory structure to maintain a cleaner project. See "How to setup Pixelit Server" section.
   

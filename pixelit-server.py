@@ -14,15 +14,11 @@ class AppLoop:
     self.applist=[]
 
   def loadApps(self):
-    currentpath=pathlib.Path(__file__).parent.resolve()
-    #print("[DEBUG]",str(currentpath))
-    for file in os.listdir(str(currentpath)+"/active-apps"):
-      if not file.endswith("config.py"):
-        if not file.endswith("pixelit.py"):
-          if file.endswith(".py"):
-            #print(file)
-            tmp=App(file,str(currentpath)+"/active-apps/"+file)
-            self.add(tmp)
+    for appname,apppath in config.apps.items():
+      if apppath.startswith("./"): #make relative paths to absolute paths
+        apppath = str(pathlib.Path(__file__).parent.resolve()) + apppath.lstrip(".")
+      tmpapp=App(appname, apppath)
+      self.add(tmpapp)
 
   def getApplist(self):
     return self.applist

@@ -12,6 +12,11 @@ mqtt = {
   'qos': 1                      # default: 1
 }
 
+apps = {
+  'clock' : './available-apps/clock-led.py',
+  'tatort': './available-apps/tatort-ard-led.py'
+}
+
 dota = {
   'player' : 12345123,        # your Dota2 player ID. 
   'days' : 14,                # number of days to consider
