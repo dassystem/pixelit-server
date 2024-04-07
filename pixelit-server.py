@@ -15,8 +15,10 @@ class AppLoop:
 
   def loadApps(self):
     for appname,apppath in config.apps.items():
-      if apppath.startswith("./"): #make relative paths to absolute paths
-        apppath = str(pathlib.Path(__file__).parent.resolve()) + apppath.lstrip(".")
+      # make relative path to absolute paths
+      # print("relative path",apppath)
+      apppath = os.path.abspath(apppath)
+      # print("absolute path",apppath)
       tmpapp=App(appname, apppath)
       self.add(tmpapp)
 
