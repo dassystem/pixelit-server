@@ -33,6 +33,19 @@ class AppLoop:
   def add(self, newApp):
     self.applist.append(newApp)
 
+  def loopApps(self):
+    while True:
+      for i in self.getApplist():
+        try:
+          subprocess.call(i.getPath()) #calling individual .py scripts
+          print("\n[DEBUG] Advancing to next app \n")
+        except subprocess.CalledProcessError as err:
+         print("[ERROR] Something happend calling an app in the active-apps directory.")
+        except PermissionError:
+         print("[ERROR] No permission for",str(i.getPath()),"Is this correctly encoded python script?")
+  
+
+
 class App:
   def __init__(self,appname,path):
       self.appname=appname
@@ -49,6 +62,7 @@ def text(mytext):
   print(mytext)
   print("===========================\n")
 
+
 if __name__ == "__main__":
 
   text("WELCOME TO PIXELIT SERVER")
@@ -59,14 +73,6 @@ if __name__ == "__main__":
   appLoop.printApps()
 
   text("SERVER Apploop starts now!")
-  
-  while True:
-    for i in appLoop.getApplist():
-      try:
-        subprocess.call(i.getPath()) #calling individual .py scripts
-        print("\n[DEBUG] Advancing to next app \n")
-      except subprocess.CalledProcessError as err:
-        print("[ERROR] Something happend calling an app in the active-apps directory.")
-      except PermissionError:
-        print("[ERROR] No permission for",str(i.getPath()),"Is this correctly encoded python script?")
 
+  appLoop.loopApps()
+  
