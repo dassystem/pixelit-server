@@ -40,9 +40,9 @@ class AppLoop:
           subprocess.call(i.getPath()) #calling individual .py scripts
           print("\n[DEBUG] Advancing to next app \n")
         except subprocess.CalledProcessError as err:
-         print("[ERROR] Something happend calling an app in the active-apps directory.")
+         print("[ERROR] Something happend calling an app in the app loop.")
         except PermissionError:
-         print("[ERROR] No permission for",str(i.getPath()),"Is this correctly encoded python script?")
+         print("[ERROR] No permission for",str(i.getPath()),"Is this a correctly encoded python script?")
   
 
 
