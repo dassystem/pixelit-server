@@ -6,6 +6,7 @@ After=multi-user.target
 Type=simple
 Restart=always
 ExecStart=/usr/bin/python3 /path/to/pixelit-server.py
+WorkingDirectory=/path/to/pixelit-server-dir
 
 [Install]
 WantedBy=multi-user.target
