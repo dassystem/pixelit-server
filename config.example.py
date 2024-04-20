@@ -2,6 +2,8 @@ setup = {
   'pixeliturls' : ['http://192.168.178.1','http://192.168.178.2'], # Array of URLs of the microcontroller running pixelit with http://
   'minSecondsPerApp' : 10,      # Minimal display time per app
   'scrollTextDelay' : 38,       # Textspeed
+  'starttime' : "08:00",        # When to start the display. Ignored when not set
+  'stoptime' : "23:00",         # When to stop the display. Ignored when not set
 }
 
 mqtt = {

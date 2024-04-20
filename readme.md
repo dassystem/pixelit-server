@@ -188,24 +188,25 @@ Therefore is dependent on functions defined in `pixelit.py`. While you can use `
 
 ### Pixelit Server Features
 * Display and cycle all configured python scripts ("Apps") using `pixelit.py`
-
+* Have defined start and stop times for the display (=LEDs) defined in `config.py`
 
 ### How to setup Pixelit Server
 
 > :warning: From 2024-04-02 on all apps need to be configured in `config.py`
 
-1. In `config.py` add all the names and paths (absolute paths recommended) to a list in the "apps" section. E.g.:
+1. In `config.py` setup the IPs to your hardware pixelit units. You might also want to adjust the text scroll speed via `scrollTextDelay` and use `minSecondsPerApp` to define a minimal time per app on the display. 
+2. In `config.py` add all the names and paths (absolute paths recommended) to a list in the "apps" section. E.g.:
 ```
 apps = {
   'clock' : './available-apps/clock-led.py',
   'app2'  : '/my/other/path/app2.py'
 }
 ```
-2. Start pixelit- server via `python3 pixelit-server.py` or create a [systemd service](./pixelit.service) for that. 
+3. Start pixelit- server via `python3 pixelit-server.py` or create a [systemd service](./pixelit.service) for that. 
    * You might then start and stop this server via `systemctl start|stop|restart|status pixelit.service`.
    * Please adjust your path in the `.service` file.
 
-3. Be sure that all required python libraries are installed like `requests`, `pickle`, `threading`, `datetime` and `pytz`.  Depending on your apps you might also need `json`, `feedparser`, `random`, `bs4` and `urllib` and probably more for your own needs.
+4. Be sure that all required python libraries are installed like `requests`, `pickle`, `threading`, `datetime` and `pytz`.  Depending on your apps you might also need `json`, `feedparser`, `random`, `bs4` and `urllib` and probably more for your own needs.
 
 
 > :warning: Remember to restart your server / service after adding or removing files in the `active-apps` directory.
@@ -234,6 +235,6 @@ What is important here?
 
 # Changelog
 
+* 2024-04-20: Adding start and stop times in config for pixelit-server.py
 * 2024-04-02: Changed app discovery to config.py instead of having it in a defined directory structure.
 * 2023-12-20: Changed file and directory structure to maintain a cleaner project. See "How to setup Pixelit Server" section.
-  
