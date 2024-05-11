@@ -73,8 +73,9 @@ def getTatortdate(html):
         tatortdate=onAir.find(class_='dachzeile')
         tatortdate = BeautifulSoup(str(tatortdate),'html.parser')
         tatortdate = tatortdate.text.strip()
-        tatortdate = dateConvert(tatortdate)
-        tatortdate = tatortdate.strftime("%a. %d.%m. %H:%M Uhr")
+        #TODO: on saturdays date might be set to "morgen" instead of date
+        #tatortdate = dateConvert(tatortdate)
+        #tatortdate = tatortdate.strftime("%a. %d.%m. %H:%M Uhr")
     return tatortdate
     
 def getTatorttitle(html):
@@ -107,14 +108,14 @@ if __name__ == "__main__":
 
     if pixelit.exceedsTimeLimit(myappname,config.tatort['fechtEveryMinutes']):
         mySeries,myTitle,myTime = checktatort()
-        msg ="Nächster "+ str(mySeries) + ": »" + str(myTitle) + "« am " + str(myTime)
+        msg ="Nächster "+ str(mySeries) + ": »" + str(myTitle) + "«, " + str(myTime)
         krimi2ledmatrix(msg)
     else:
       try:
         data=pixelit.readDataFromFile(myappname)
       except:
         mySeries,myTitle,myTime = checktatort()
-        msg ="Nächster "+ str(mySeries) + ": »" + str(myTitle) + "« am " + str(myTime)
+        msg ="Nächster "+ str(mySeries) + ": »" + str(myTitle) + "«, " + str(myTime)
         krimi2ledmatrix(msg)
 
     
