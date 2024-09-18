@@ -60,7 +60,7 @@ def sendGlucose(glucose,r_color=255, g_color=255, b_color=255, iconnumber=1037):
      scrollText="auto",
      centerText="true",
      )
-  print("[INFO]","Send",str(glucose),"to Matrix")
+  print("[INFO]","Send",str(glucose),"to LED-matrix")
 
 
 # check for live data
@@ -103,8 +103,16 @@ def getProfileUrl():
 
 def getProfileData(url):
   try:
+  #  print("Getting profiledata?")
+  #  print("url", url)
+  #  a = requests.get(url)
+  #  print("a",a)
+  #  b = json.dumps(requests.get(url).json())
+  #  print("b",b)
+  #  c = json.loads(json.dumps(requests.get(url).json()))
+  #  print("c",c)
     return json.loads(json.dumps(requests.get(url).json()))
-  except:# json.decoder.JSONDecodeError:
+  except: # json.decoder.JSONDecodeError:
     print("ERROR: loading profile data. Is nightscout available?")
 
 ## main program:
@@ -131,9 +139,8 @@ if __name__ == "__main__":
 
 
   entrydata=json.dumps(requests.get(entryurl).json())
-  mydata = json.loads(entrydata)  
+  mydata = json.loads(entrydata)
   checkdatatime(mydata)   # check, if values are too old
-
   
   try:
     glucose   = (mydata[0]['sgv'])
