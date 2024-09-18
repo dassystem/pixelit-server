@@ -53,11 +53,11 @@ def krimi2ledmatrix(msg):
                     )
 
 def checktatort():
-    #TODO: Get tatort / polizeiruf series. Need to check the headline class_: 'conHeadline' and search for "Tatort" or "Polizeiruf: 110"
+    #Get tatort / polizeiruf series. Need to check the headline class_: 'conHeadline' and search for "Tatort" or "Polizeiruf: 110"
     tatorturl="https://www.daserste.de/unterhaltung/krimi/tatort/vorschau/index.html"
     try: 
       rawhtml = scrapHTML(tatorturl)
-      print("scraped")
+      #print("scraped")
     except:
       print("[ERROR] ARD URL NOT REACHABLE OR SIMILAR PROBLEM PARSING")
       pixelit.skipApp()
