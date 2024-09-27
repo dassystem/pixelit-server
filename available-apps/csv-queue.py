@@ -3,7 +3,7 @@
 
 # Import pixelit related libs and config from parent directory
 import os, sys
-#sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import pixelit
 import config
 import csv
@@ -13,11 +13,12 @@ import csv
 csvfilename='.csvqueue.csv'
 path='available-apps/'
 
-#csvfilename=path+csvfilename
+csvfilename=path+csvfilename
+print(csvfilename)
 filesizelimit=3000000 #roughly 3MB
 
 def existscheck():
-  if os.path.isfile(path+csvfilename):
+  if os.path.isfile(csvfilename):
     print("file exists")
     return 1
   else:
@@ -25,7 +26,7 @@ def existscheck():
     return 0
 
 def empty():
-  if os.stat(path+csvfilename).st_size == 0: 
+  if os.stat(csvfilename).st_size == 0: 
     print("File", csvfilename, "is empty.") 
     return 1
   else: 
@@ -51,14 +52,12 @@ def writetocsv(newData):
       output.writerow([newData])
     
 
-
-
 def deletefirstfromcsv():
-  with open(".csvqueue.csv", "r") as f:
+  with open(csvfilename, "r") as f:
       data = f.read().split("\n")
   del data[0] # Remove the 1st line
   # Save the data
-  with open(".csvqueue.csv", "w") as f:
+  with open(csvfilename, "w") as f:
       f.write("\n".join(data))
 
 def printallcsv():
@@ -119,7 +118,6 @@ if __name__ == "__main__":
   # or show it first one on matrix
   else:
     send2matrix(readfirstfromcsv())
-
   printallcsv()
 
   
