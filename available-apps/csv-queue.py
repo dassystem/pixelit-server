@@ -3,7 +3,7 @@
 
 # Import pixelit related libs and config from parent directory
 import os, sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+#sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import pixelit
 import config
 import csv
@@ -13,9 +13,24 @@ import csv
 csvfilename='.csvqueue.csv'
 path='available-apps/'
 
-
-csvfilename=path+csvfilename
+#csvfilename=path+csvfilename
 filesizelimit=3000000 #roughly 3MB
+
+def existscheck():
+  if os.path.isfile(path+csvfilename):
+    print("file exists")
+    return 1
+  else:
+    print("file does not exists")
+    return 0
+
+def empty():
+  if os.stat(path+csvfilename).st_size == 0: 
+    print("File", csvfilename, "is empty.") 
+    return 1
+  else: 
+    return 0
+
 
 def writetocsv(newData):
   # write newData to local csv file
@@ -36,20 +51,7 @@ def writetocsv(newData):
       output.writerow([newData])
     
 
-def existscheck():
-  if os.path.isfile(csvfilename):
-    print("file exists")
-    return 1
-  else:
-    print("file does not exists")
-    return 0
 
-def empty():
-  if os.stat(csvfilename).st_size == 0: 
-    print("File", csvfilename, "is empty.") 
-    return 1
-  else: 
-    return 0
 
 def deletefirstfromcsv():
   with open(".csvqueue.csv", "r") as f:
