@@ -9,7 +9,12 @@ import config
 import csv
 
 
+# config:
 csvfilename='.csvqueue.csv'
+path='available-apps/'
+
+
+csvfilename=path+csvfilename
 filesizelimit=3000000 #roughly 3MB
 
 def writetocsv(newData):
