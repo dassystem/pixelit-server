@@ -15,16 +15,21 @@ filesizelimit=3000000 #roughly 3MB
 def writetocsv(newData):
   # write newData to local csv file
   print("[Info] Writing to CSV")
-
-  print("filesize", os.stat(csvfilename).st_size,"byte")
-  if os.stat(csvfilename).st_size < filesizelimit: #
-    with open(csvfilename, 'a', newline='') as csvfile:
-      output = csv.writer(csvfile, delimiter=' ',
-                              quotechar='|', quoting=csv.QUOTE_MINIMAL)
-      output.writerow([newData])
+  if existscheck():
+    print("filesize", os.stat(csvfilename).st_size,"byte")
+    if os.stat(csvfilename).st_size < filesizelimit: #
+      with open(csvfilename, 'a', newline='') as csvfile:
+        output = csv.writer(csvfile, delimiter=' ',quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        output.writerow([newData])
+    else:
+      print("[ERROR] Filesize too large ("+str(os.stat(csvfilename).st_size),"byte)")
+      quit()
   else:
-    print("[ERROR] Filesize too large ("+str(os.stat(csvfilename).st_size),"byte)")
-    quit()
+    #TODO remove duplicate code --->
+    with open(csvfilename, 'a', newline='') as csvfile: 
+      output = csv.writer(csvfile, delimiter=' ', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+      output.writerow([newData])
+    
 
 def existscheck():
   if os.path.isfile(csvfilename):
@@ -51,11 +56,12 @@ def deletefirstfromcsv():
 
 def printallcsv():
   # read first entry from csv file and delete it
-  print("[Info] All content of CSV")
-  with open(csvfilename, newline='') as f:
-    reader = csv.reader(f, quotechar='|')
-    for row in reader:
-      print(row[0])
+  if existscheck():
+    print("[Info] All content of CSV")
+    with open(csvfilename, newline='') as f:
+      reader = csv.reader(f, quotechar='|')
+      for row in reader:
+        print(row[0])
 
 def readfirstfromcsv():
   # read first entry from csv file and delete it
