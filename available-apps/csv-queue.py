@@ -34,15 +34,15 @@ filesizelimit=3000000 #roughly 3MB
 
 def existscheck():
   if os.path.isfile(csvfilename):
-    print("file exists")
+    #print("file exists")
     return 1
   else:
-    print("file does not exists")
+    #print("file does not exists")
     return 0
 
 def empty():
   if os.stat(csvfilename).st_size == 0: 
-    print("File", csvfilename, "is empty.") 
+    #print("File", csvfilename, "is empty.") 
     return 1
   else: 
     return 0
@@ -50,7 +50,7 @@ def empty():
 
 def writetocsv(newData):
   # write newData to local csv file
-  print("[Info] Writing to CSV")
+  print("[Info] Writing",str(newData),"to CSV")
   if existscheck():
     print("filesize", os.stat(csvfilename).st_size,"byte")
     if os.stat(csvfilename).st_size < filesizelimit: #
@@ -87,7 +87,7 @@ def printallcsv():
 def readfirstfromcsv():
   # read first entry from csv file and delete it
   if existscheck():
-    print("[Info] Reading from CSV")
+    #print("[Info] Reading from CSV")
     if not empty():
       with open(csvfilename, newline='') as f:
         reader = csv.reader(f, quotechar='|')
@@ -97,18 +97,18 @@ def readfirstfromcsv():
 
       return(row1[0])
     else: 
-      print("do nothing")
+      # do nothing
       pixelit.skipApp()
       quit()
   else:
-    print("do nothing")
+    # do nothing
     pixelit.skipApp()
     quit()
 
 
 def send2matrix(myText):
   # send text to matrix
-  print("[INFO] Sending to LED Matrix:",myText)
+  print("[INFO][CSV-QUEUE] Sending to LED Matrix:",myText)
   pixelit.sendApp(
     text_msg=myText,
     red=255,
@@ -133,6 +133,6 @@ if __name__ == "__main__":
   # or show it first one on matrix
   else:
     send2matrix(readfirstfromcsv())
-  printallcsv()
+  #printallcsv()
 
   
