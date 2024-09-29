@@ -1,6 +1,21 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+## what is csv-queue?
+# csv-queue writes Messages to a single csv file (like a database).
+# When you don't add an argument to the call csv-queue goes into read mode and
+# reads the first item from the queue, sending it to your pixelit and removing
+# the first entry.
+#
+## How to use csv-queue?
+#
+### write to queue:
+# `python3 csv-queue.py "My item to store"`
+#
+### Read from queue and send it to pixelit:
+# `python csv-queue` without argument
+
+
 # Import pixelit related libs and config from parent directory
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
