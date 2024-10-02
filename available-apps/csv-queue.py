@@ -22,11 +22,16 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import pixelit
 import config
 import csv
-
+import inspect
 
 # config:
 csvfilename='.csvqueue.csv'
-path='available-apps/'
+
+abs_path = os.path.abspath((inspect.stack()[0])[1])
+directory = os.path.dirname(abs_path)
+
+#path='available-apps/' #if comming from pixelit server
+path=directory
 
 csvfilename=path+csvfilename
 print(csvfilename)
@@ -92,9 +97,7 @@ def readfirstfromcsv():
       with open(csvfilename, newline='') as f:
         reader = csv.reader(f, quotechar='|')
         row1 = next(reader)
-    
       deletefirstfromcsv()
-
       return(row1[0])
     else: 
       # do nothing
@@ -126,6 +129,7 @@ if __name__ == "__main__":
   myappname="csvqueue"
 
   #print(len(sys.argv), sys.argv)
+
 
   #if argument given, add an item 
   if len(sys.argv) == 2:
