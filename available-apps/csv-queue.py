@@ -28,13 +28,10 @@ import inspect
 csvfilename='.csvqueue.csv'
 
 abs_path = os.path.abspath((inspect.stack()[0])[1])
-directory = os.path.dirname(abs_path)
-
-#path='available-apps/' #if comming from pixelit server
-path=directory
-
+path = os.path.dirname(abs_path)
 csvfilename=path+csvfilename
-print(csvfilename)
+
+#print(csvfilename)
 filesizelimit=3000000 #roughly 3MB
 
 def existscheck():
