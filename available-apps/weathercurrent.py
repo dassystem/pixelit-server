@@ -31,8 +31,10 @@ class weatherObject:
     return self.date
 
   def getTemp(self):
-    out=self.data['daily'][0]['temp']['day']
+    #print(self.data)
+    out=self.data['main']['temp']
     out=round(out,1)
+    #print("temperatur ist", out)
     return out
 
 
@@ -44,16 +46,34 @@ def getWeatherObjects():
   lon = str(config.weather['lon'])
   appid = str(config.weather['apikey'])
 
-  url_today = "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=current,minutely,hourly,alerts&appid="+appid+"&units=metric"
+  url_today =  "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&exclude=current,minutely,hourly,alerts&appid="+appid+"&units=metric"
   try:
     # Get weather objects
     weatherdata_today=weatherObject(today,getWeatherData(url_today))
     weatherdata_today.getTemp()
     return weatherdata_today
-  except: 
-    print("[ERROR] Not connecting to openweathermap")
+  except:
+    print("[ERROR] Not connecting to openweathermap or parsing errors")
     pixelit.skipApp()
     quit()
+
+def getImage(temp):
+  temp = float(temp[:-2])
+  if temp > 30:
+    print("hot")
+  elif temp > 20:
+    print("warm")
+  elif temp > 10:
+    prin ("fresh")
+  elif temp > 5:
+    print("cold")
+  elif temp > 0:
+    print("frosty")
+  elif temp > -5:
+    print("icy")
+  else:
+    print("apokalyptic")
+      
 
 if __name__ == "__main__":
   myappname="weather"
@@ -62,11 +82,14 @@ if __name__ == "__main__":
     pixelit.writeDataToFile(currenttemp,myappname)
   else:
     try:
+      # load from cache
       currenttemp=pixelit.readDataFromFile(myappname)
     except:
+      # if not loading, try grab fresh info
       currenttemp = str(getWeatherObjects().getTemp())+"°C"
       pixelit.writeDataToFile(currenttemp,myappname)
-  
+
+  getImage(currenttemp)
   print("[INFO] Sending ",currenttemp)
   pixelit.sendApp(
     text_msg=currenttemp,
