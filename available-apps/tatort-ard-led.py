@@ -15,7 +15,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import pixelit
 import config
 
-
+#locale.setlocale(locale.LC_TIME, locale.normalize("de"))
 
 def scrapHTML(myurl):
     rawdata = requests.get(myurl)
@@ -52,11 +52,11 @@ def krimi2ledmatrix(msg):
                     centerText="false",
                     )
 
-def checktatort():
+def checktatort(krimiurl):
     #Get tatort / polizeiruf series. Need to check the headline class_: 'conHeadline' and search for "Tatort" or "Polizeiruf: 110"
-    tatorturl="https://www.daserste.de/unterhaltung/krimi/tatort/vorschau/index.html"
+#    tatorturl=polizeirufurl
     try: 
-      rawhtml = scrapHTML(tatorturl)
+      rawhtml = scrapHTML(krimiurl)
       #print("scraped")
     except:
       print("[ERROR] ARD URL NOT REACHABLE OR SIMILAR PROBLEM PARSING")
@@ -64,9 +64,9 @@ def checktatort():
       quit()
     try:
       nextDate = getTatortdate(rawhtml)
-      print("Date:", nextDate)
+      #print("Date:", nextDate)
       nextTitle= getTatorttitle(rawhtml)
-      print("Title:", nextTitle)
+      #print("Title:", nextTitle)
       nextSeriesName=getSeriesname(rawhtml)
       return nextSeriesName, nextTitle, nextDate
     except:
@@ -120,19 +120,70 @@ def getSeriesname(html):
       print("[ERROR] KEIN SERIENNAME GEFUNDEN!")
       return "KEIN SERIENNAME GEFUNDEN"   
 
+class Krimi:
+  def __init__(self,myseries,mytitle,mytime):
+    self.series = myseries
+    self.title = mytitle
+    self.time = mytime
+
+  def getSeries(self):
+    return self.series
+    
+  def getTitle(self):
+    return self.title
+    
+  def getTime(self): 
+    return self.time
+
+
+def compare(krimiurls):
+  # for all Series get the next event and save as Object
+  for url in krimiurls:    
+    mySeries,myTitle,myTime = checktatort(url)
+    krimi=Krimi(mySeries,myTitle,myTime)
+    krimiliste.append(krimi)
+
+  # Compare dates / convert "heute" to date to find the next Krimi
+  krimitime=[]
+  for krimi in krimiliste:
+    print("[INFO] Found Krimi:",krimi.getSeries(),krimi.getTitle(),krimi.getTime())
+    separator = "|"
+    out=krimi.getTime().rsplit(separator,1)[0]
+    if "Heute" in out:
+      print("string heute gefunden")
+      out = datetime.today().strftime('%d.%m.')
+      out = datetime.strptime(out,"%d.%m.").date()
+      print(out, type(out))
+    else:
+      out = out[5:]
+      out = datetime.strptime(out,"%d.%m. ").date()
+    print("hier",out)
+    krimitime.append(out)
+
+  index=krimitime.index(min(krimitime)) #find smallest date and get index of list
+  nextkrimi=krimiliste[index]
+  msg ="Nächster "+ nextkrimi.getSeries() + ": »" + nextkrimi.getTitle() + "«, " + str(nextkrimi.getTime())
+  krimi2ledmatrix(msg)
+  return(msg)
+
+
 if __name__ == "__main__":
     myappname="tatortARD"
 
+    tatorturl="https://www.daserste.de/unterhaltung/krimi/tatort/vorschau/index.html"
+    polizeirufurl="https://www.daserste.de/unterhaltung/krimi/polizeiruf-110/vorschau/index.html"
+    krimiurls=[tatorturl,polizeirufurl]
+
+    krimiliste=[]
+
+    # fresh data
     if pixelit.exceedsTimeLimit(myappname,config.tatort['fechtEveryMinutes']):
-        mySeries,myTitle,myTime = checktatort()
-        msg ="Nächster "+ str(mySeries) + ": »" + str(myTitle) + "«, " + str(myTime)
-        krimi2ledmatrix(msg)
+      pixelit.writeDataToFile(compare(krimiurls),myappname) #compare, send, and save
     else:
       try:
-        data=pixelit.readDataFromFile(myappname)
+        data=pixelit.readDataFromFile(myappname) #read old data from cache
+        krimi2ledmatrix(data)
       except:
-        mySeries,myTitle,myTime = checktatort()
-        msg ="Nächster "+ str(mySeries) + ": »" + str(myTitle) + "«, " + str(myTime)
-        krimi2ledmatrix(msg)
+        pixelit.writeDataToFile(compare(krimiurls),myappname) #compare, send, and save
 
     
