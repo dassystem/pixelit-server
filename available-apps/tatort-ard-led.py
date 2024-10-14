@@ -143,8 +143,18 @@ def compare(krimiurls):
     krimi=Krimi(mySeries,myTitle,myTime)
     krimiliste.append(krimi)
 
-  # Compare dates / convert "heute" to date to find the next Krimi
   krimitime=[]
+  # Check for primetime
+  for krimi in krimiliste:
+    separator = "|"
+    out=krimi.getTime().split(separator,1)[1]
+    print(out)
+    out = datetime.strptime(out," %H:%M Uhr")
+    if out.hour!=20:
+      print("is not primetime")
+      krimiliste.remove(krimi)
+  
+  # Compare dates / convert "heute" to date to find the next Krimi
   for krimi in krimiliste:
     print("[INFO] Found Krimi:",krimi.getSeries(),krimi.getTitle(),krimi.getTime())
     separator = "|"
@@ -157,7 +167,6 @@ def compare(krimiurls):
     else:
       out = out[5:]
       out = datetime.strptime(out,"%d.%m. ").date()
-    print("hier",out)
     krimitime.append(out)
 
   index=krimitime.index(min(krimitime)) #find smallest date and get index of list
