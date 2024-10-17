@@ -1,7 +1,7 @@
 # License
 
 pixelit.py and Pixelit Server
-Copyright (C) 2023
+Copyright (C) 2023-2024
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -55,6 +55,7 @@ And hopefully you don't have do dig too deep into `pixelit.py`'s code since all 
 * Dota2 Winrate Calculator
 * Nightscout Bloodsugar Display
 * tatort / Polizeiruf 110 Checker
+* Messagequeue via CSV
 
 ### Setup pixelit.py via config.py
 
