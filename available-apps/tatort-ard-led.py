@@ -148,10 +148,9 @@ def compare(krimiurls):
   for krimi in krimiliste:
     separator = "|"
     out=krimi.getTime().split(separator,1)[1]
-    print(out)
     out = datetime.strptime(out," %H:%M Uhr")
     if out.hour!=20:
-      print("is not primetime")
+      #print("is not primetime")
       krimiliste.remove(krimi)
   
   # Compare dates / convert "heute" to date to find the next Krimi
@@ -160,7 +159,7 @@ def compare(krimiurls):
     separator = "|"
     out=krimi.getTime().rsplit(separator,1)[0]
     if "Heute" in out:
-      print("string heute gefunden")
+      #print("string heute gefunden")
       out = datetime.today().strftime('%d.%m.')
       out = datetime.strptime(out,"%d.%m.").date()
       print(out, type(out))

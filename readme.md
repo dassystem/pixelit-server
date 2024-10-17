@@ -224,7 +224,7 @@ What is important here?
 * When sending an app via `pixelit.sendApp()` it not only shows bitmap and text message, but also calculates the length of the message via `pixelit.calculateDisplayDuration()`.
 * If a message is shorter than the configured `minSecondsPerApp` in `config.py`, then it waits for exactly this duration.
 * If a massage is longer than the configured duration, it calculates the time depending on the length of the message.
-* If you call an script in your `./active-apps` directory but do not want anything to show, use `pixelit.skipApp()` to signalize skipping the char check and proceeding with the next app. This can be used to skip an app.
+* If you call an script in your but do not want anything to show, use `pixelit.skipApp()` to signalize skipping the char check and proceeding with the next app. This can be used to skip an app.
 
 
 
