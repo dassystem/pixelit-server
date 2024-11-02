@@ -3,7 +3,7 @@
 
 import requests
 import datetime
-from datetime import datetime
+#from datetime import datetime
 from bs4 import BeautifulSoup
 import logging
 import locale
@@ -31,7 +31,7 @@ def sortByDate(data):
 def dateConvert(oldDate):
     #In: Mo., 01.01. | 20:15 Uhr
     locale.setlocale(locale.LC_ALL, 'de_DE.utf8')
-    newDate=datetime.strptime(oldDate,'%a., %d.%m. | %H:%M Uhr')
+    newDate=datetime.datetime.strptime(oldDate,'%a., %d.%m. | %H:%M Uhr')
     #print(type(newDate))
     #print(newDate)
     return newDate
@@ -148,7 +148,7 @@ def compare(krimiurls):
   for krimi in krimiliste:
     separator = "|"
     out=krimi.getTime().split(separator,1)[1]
-    out = datetime.strptime(out," %H:%M Uhr")
+    out = datetime.datetime.strptime(out," %H:%M Uhr")
     if out.hour!=20:
       #print("is not primetime")
       krimiliste.remove(krimi)
@@ -160,12 +160,17 @@ def compare(krimiurls):
     out=krimi.getTime().rsplit(separator,1)[0]
     if "Heute" in out:
       #print("string heute gefunden")
-      out = datetime.today().strftime('%d.%m.')
-      out = datetime.strptime(out,"%d.%m.").date()
+      out = datetime.datetime.today().strftime('%d.%m.')
+      out = datetime.datetime.strptime(out,"%d.%m.").date()
       print(out, type(out))
+    elif "Morgen" in out:
+      #print("string morgen gefunden")
+      out = datetime.datetime.today() + datetime.timedelta(days=1)
+      out = out.strftime('%d.%m.')
+      out = datetime.datetime.strptime(out,"%d.%m.").date() 
     else:
       out = out[5:]
-      out = datetime.strptime(out,"%d.%m. ").date()
+      out = datetime.datetime.strptime(out,"%d.%m. ").date()
     krimitime.append(out)
 
   index=krimitime.index(min(krimitime)) #find smallest date and get index of list
