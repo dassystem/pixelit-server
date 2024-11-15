@@ -49,7 +49,6 @@ def sendError():
 
 #sendGlucose(glucose, r_color, g_color, b_color, iconnumber)
 def sendGlucose(glucose,r_color=255, g_color=255, b_color=255, iconnumber=1037):
-  #"EasyWeather", short,red=255,green=255,blue=255,icon=1329,force="false",count=1,duration=0,repeat=1,id=11
   pixelit.sendApp(
      text_msg=str(glucose),
      red=r_color,
@@ -72,9 +71,8 @@ def checkdatatime(nsEntry):
   timezone = pytz.timezone('Europe/Berlin')
   now = timezone.localize(datetime.datetime.now())
   timediff=abs(now-lastdata_obj)
-  #TODO: issue with timediff 1440 is infact timediff 0.
 
-  print("[DEBUG] Time:\n now:     ",str(now),"\n last data", lastdata_obj, "\n timediff ", timediff)
+#  print("[DEBUG] Time:\n now:     ",str(now),"\n last data", lastdata_obj, "\n timediff ", timediff)
 
 # Check if data is older than 30 min
   if round(timediff.seconds/60) <=30:
