@@ -71,7 +71,10 @@ def checkdatatime(nsEntry):
   lastdata_obj = timezone.localize(lastdata_obj)
   timezone = pytz.timezone('Europe/Berlin')
   now = timezone.localize(datetime.datetime.now())
-  timediff=now-lastdata_obj
+  timediff=abs(now-lastdata_obj)
+  #TODO: issue with timediff 1440 is infact timediff 0.
+
+  print("[DEBUG] Time:\n now:     ",str(now),"\n last data", lastdata_obj, "\n timediff ", timediff)
 
 # Check if data is older than 30 min
   if round(timediff.seconds/60) <=30:
