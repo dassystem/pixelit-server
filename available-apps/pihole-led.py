@@ -46,7 +46,7 @@ def send2matrix(printtext):
 if __name__ == "__main__":
   myappname="pihole"
 
-  if pixelit.exceedsTimeLimit(myappname,config.pihole['fechtEveryMinutes']):
+  if pixelit.exceedsTimeLimit(myappname,config.pihole['fetchEveryMinutes']):
     data=getAdsBlockedToday()
     pixelit.writeDataToFile(data,myappname)
   else:

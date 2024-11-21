@@ -145,7 +145,7 @@ if __name__ == "__main__":
   now = timezone.localize(datetime.datetime.now())
   myappname="rssnews"
 
-  if pixelit.exceedsTimeLimit(myappname,config.rssnews['fechtEveryMinutes']):
+  if pixelit.exceedsTimeLimit(myappname,config.rssnews['fetchEveryMinutes']):
     # Load News from the Internets and write to file
     print("[DEBUG] Loading news from the Internets")
     single_newslist=[]

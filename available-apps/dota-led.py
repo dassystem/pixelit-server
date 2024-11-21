@@ -64,7 +64,7 @@ def showWinrate(printtext):
 if __name__ == "__main__":
   myappname="dota"
   
-  if pixelit.exceedsTimeLimit(myappname,config.dota['fechtEveryMinutes']):
+  if pixelit.exceedsTimeLimit(myappname,config.dota['fetchEveryMinutes']):
     data=calcWinrate(getOpenDotaData())
     pixelit.writeDataToFile(data,myappname)
   else:

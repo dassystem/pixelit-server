@@ -86,7 +86,7 @@ def getImage(temp):
 
 if __name__ == "__main__":
   myappname="weather"
-  if pixelit.exceedsTimeLimit(myappname,config.weather['fechtEveryMinutes']):
+  if pixelit.exceedsTimeLimit(myappname,config.weather['fetchEveryMinutes']):
     currenttemp = str(getWeatherObjects().getTemp())+"°C"
     pixelit.writeDataToFile(currenttemp,myappname)
   else:
