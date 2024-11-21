@@ -6,8 +6,11 @@ import config
 import os
 import subprocess
 import time
+from datetime import datetime
 import pathlib
 import pixelit
+
+
 
 class AppLoop:
   def __init__(self):
@@ -37,6 +40,7 @@ class AppLoop:
     while True:
       for i in self.getApplist():
         try:
+          checkTime()
           subprocess.call(i.getPath()) #calling individual .py scripts
           print("\n[DEBUG] Advancing to next app \n")
         except subprocess.CalledProcessError as err:
@@ -56,6 +60,21 @@ class App:
     
   def getPath(self):
     return (self.path)
+
+
+def checkTime():
+  try:
+    current_time = datetime.now().time()
+    start = datetime.strptime(config.setup['starttime'], '%H:%M').time()
+    stop = datetime.strptime(config.setup['stoptime'], '%H:%M').time()
+    print("[DEBUG] It is", current_time, "we start at", start,"and we stop at",stop)
+    if (current_time > start) and (current_time < stop):
+      pixelit.pixelItSleep(False)
+    else:
+      pixelit.pixelItSleep(True)
+  except:
+    print("[INFO] No start and stop time found in config.py")
+    pass
     
 def text(mytext):
   print("\n===========================")
