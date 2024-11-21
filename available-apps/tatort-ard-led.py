@@ -190,7 +190,7 @@ if __name__ == "__main__":
     krimiliste=[]
 
     # fresh data
-    if pixelit.exceedsTimeLimit(myappname,config.tatort['fechtEveryMinutes']):
+    if pixelit.exceedsTimeLimit(myappname,config.tatort['fetchEveryMinutes']):
       pixelit.writeDataToFile(compare(krimiurls),myappname) #compare, send, and save
     else:
       try:

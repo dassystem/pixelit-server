@@ -216,7 +216,7 @@ def krimi2ledmatrix(nextSundayKrimi, msg, rebroadcast):
 
 if __name__ == "__main__":
     myappname="tatort"
-    if pixelit.exceedsTimeLimit(myappname,config.tatort['fechtEveryMinutes']):
+    if pixelit.exceedsTimeLimit(myappname,config.tatort['fetchEveryMinutes']):
         nextSundayKrimi, msg, rebroadcast = checkKrimi()   #get all data
         krimi2ledmatrix(nextSundayKrimi, msg,rebroadcast)    #send data to ledmatrix
     else:
