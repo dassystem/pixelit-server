@@ -155,7 +155,7 @@ def sendText(text_msg="Hello World",red=255,green=255,blue=255,bigFont="false",s
 
 
 
-def sendApp(text_msg="Hello World",red=255,green=255,blue=255,icon="[255]",bigFont="false",scrollText='auto',centerText="true"):
+def sendApp(text_msg="Hello World",red=255,green=255,blue=255,icon="[255]",bigFont="false",scrollText='auto',centerText="true",noWait="false"):
   senddata = '{ \
         "bitmap": {\
           "data": '+icon+',\
@@ -187,8 +187,9 @@ def sendApp(text_msg="Hello World",red=255,green=255,blue=255,icon="[255]",bigFo
         }\
       }'
   #print("[SERVER][DEBUG]",senddata)
-  sending(senddata)  
-  calculateDisplayDuration(len(text_msg))
+  sending(senddata)
+  if noWait:
+    calculateDisplayDuration(len(text_msg))
 
 
 # dirty: just send an App instead
