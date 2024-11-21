@@ -26,6 +26,13 @@ dota = {
   'fechtEveryMinutes' : 1440, # amount of minutes between fetching new data
 }
 
+fritzbox = {
+  'ip' : '192.168.178.1',     # IP of your fritzbox
+  'user': 'myusername',       # username of a fritzbox user
+  'password': 'mypassword',   # password for that fritzbox user
+  'fetchEveryMinutes' : 1440, # amount of minutes between fetching new data
+}
+
 tatort = {
   'fechtEveryMinutes' : 1440, # amount of minutes between fetching new data
 }
