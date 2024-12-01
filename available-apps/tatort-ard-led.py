@@ -60,31 +60,18 @@ def checktatort(krimiurl):
       #print("scraped")
     except:
       print("[ERROR] ARD URL NOT REACHABLE OR SIMILAR PROBLEM PARSING")
-      pixelit.skipApp()
-      quit()
+      return 1
+      #pixelit.skipApp()
+      #quit()
     try:
       nextDate = getTatortdate(rawhtml)
-      #print("Date:", nextDate)
       nextTitle= getTatorttitle(rawhtml)
-      #print("Title:", nextTitle)
       nextSeriesName=getSeriesname(rawhtml)
       return nextSeriesName, nextTitle, nextDate
     except:
-      # not finding date: No Tatort/Polizeiruf upcomming
-      print("[INFO] Probably no tatort this week")
-      msg="Kein Tatort/Polizeiruf in naher Zukunft!"
-      myicon="[693,693,65535,693,693,693,693,693,65535,63488,65535,65535,65535,693,693,63488,693,693,63488,693,693,65535,63488,693,693,65535,65535,63488,693,63488,65535,693,65535,693,65535,693,63488,693,693,65535,693,693,65535,63488,693,63488,693,65535,65535,65535,63488,65535,65535,65535,63488,65535,693,63488,65535,693,693,65535,693,63488]"
-      pixelit.sendApp(text_msg=msg,
-        red=255,
-        green=255,
-        blue=255,
-        icon=myicon,
-        bigFont="false",
-        scrollText="auto",
-        centerText="false",
-        )
-      quit()
-
+      print("[INFO] No Krimi found under this URL")
+      return 1
+      
 def getTatortdate(html):
     for onAir in html:
         tatortdate=onAir.find(class_='dachzeile')
@@ -137,11 +124,13 @@ class Krimi:
 
 
 def compare(krimiurls):
+  krimiliste=[]
   # for all Series get the next event and save as Object
   for url in krimiurls:    
-    mySeries,myTitle,myTime = checktatort(url)
-    krimi=Krimi(mySeries,myTitle,myTime)
-    krimiliste.append(krimi)
+    if checktatort(url) != 1:
+      mySeries,myTitle,myTime = checktatort(url)
+      krimi=Krimi(mySeries,myTitle,myTime)
+      krimiliste.append(krimi)
 
   krimitime=[]
   # Check for primetime
@@ -152,6 +141,23 @@ def compare(krimiurls):
     if out.hour!=20:
       #print("is not primetime")
       krimiliste.remove(krimi)
+
+  #check for empty list:
+  if not krimiliste:
+    print("No krimi found / left")
+    msg="Kein Tatort/Polizeiruf in naher Zukunft!"
+    myicon="[693,693,65535,693,693,693,693,693,65535,63488,65535,65535,65535,693,693,63488,693,693,63488,693,693,65535,63488,693,693,65535,65535,63488,693,63488,65535,693,65535,693,65535,693,63488,693,693,65535,693,693,65535,63488,693,63488,693,65535,65535,65535,63488,65535,65535,65535,63488,65535,693,63488,65535,693,693,65535,693,63488]"
+    pixelit.sendApp(text_msg=msg,
+      red=255,
+      green=255,
+      blue=255,
+      icon=myicon,
+      bigFont="false",
+      scrollText="auto",
+      centerText="false",
+      )
+    quit()
+    
   
   # Compare dates / convert "heute" to date to find the next Krimi
   for krimi in krimiliste:
