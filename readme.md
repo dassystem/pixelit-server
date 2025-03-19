@@ -59,9 +59,15 @@ And hopefully you don't have do dig too deep into `pixelit.py`'s code since all 
 
 ### Setup pixelit.py via config.py
 
-`config.py` is the central file to change settings according to your needs. `pixelit.py` and apps will use information saved in this file.
+`config.py` is the central file to change settings according to your needs. `pixelit.py` and apps will use information saved in this file. To get started copy `config.example.py` to `config.py` and modify as needed.
+
+```bash
+cp config.example.py config.py
+```
 
 > :warning: Please enter one or more URLs of your pixelit controller to get started.
+
+
 
 
 ### Sending Text to Matrix
