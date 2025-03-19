@@ -213,10 +213,12 @@ apps = {
    * You might then start and stop this server via `systemctl start|stop|restart|status pixelit.service`.
    * Please adjust your path in the `.service` file.
 
-4. Be sure that all required python libraries are installed like `requests`, `pickle`, `threading`, `datetime` and `pytz`.  Depending on your apps you might also need `json`, `feedparser`, `random`, `bs4` and `urllib` and probably more for your own needs.
+> Read more about defining systemd scripts e.g. [here](https://www.baeldung.com/linux/systemd-create-user-services).
+
+4. Be sure that all required python libraries are installed like `requests`, `pickle`, `threading`, `datetime` and `pytz`.  Depending on your apps you might also need `json`, `feedparser`, `random`, `bs4` and `urllib` and probably more for your own needs. A list of requierements can be found in the file `requirements.txt`. You can (or should) use a venv to manage python version and required modules.
 
 
-> :warning: Remember to restart your server / service after adding or removing files in the `active-apps` directory.
+> :warning: Remember to restart your server / service after adding or removing entries in the apps section of your `config.py`.
 
 
 You can add as many apps in your `config.py`, as you want. You can also add the same app multiple times, but make sure to give them unique names (e.g. "clock1", "clock2") to have them mutiple times in your apploop.
