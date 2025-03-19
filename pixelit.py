@@ -11,19 +11,18 @@
 # See https://awtrixdocs.blueforcer.de/#/en-en/README?id=awtrix
 #     https://awtrixdocs.blueforcer.de/#/de-de/api
 # 
-
 import requests
 import config
-import paho.mqtt.client as mqtt
 import pickle
 import time
+import paho.mqtt.client as mqtt
+
 
 import os
 import datetime
 import pytz
 
 import threading
-
 
 
 """ Helping apps saving data to local cache file """
@@ -85,12 +84,11 @@ def exceedsTimeLimit(appname,timeLimitMinutes):
 # pixelItSleep(False) = Display on
 """ Turns display on and off"""
 def pixelItSleep(bool=True):
-  print("[DEBUG]")
   if bool:
     senddata='{"sleepMode": true}'
   else: 
     senddata='{"sleepMode": false}'
-  print("[DEBUG] Display is in sleepmode",bool)
+  #print("[DEBUG] Display is in sleepmode",bool)
   sending(senddata) 
 
 
@@ -196,7 +194,7 @@ def sendApp(text_msg="Hello World",red=255,green=255,blue=255,icon="[255]",bigFo
 def sendTmpApp(appname, text_msg,red=255,green=255,blue=255,icon=111,lifetime=1):
   sendApp(appname,text_msg,red,green,blue,icon,False,1,1,1,id=99)
 
-""" helper function to send data via REST or MQTT to the led matrix"""
+#""" helper function to send data via REST or MQTT to the led matrix"""
 def sending(senddata):
   if config.mqtt['usage']==True:
     broker=str(config.mqtt['broker'])

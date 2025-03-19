@@ -1,0 +1,6 @@
+paho-mqtt
+requests
+pytz
+feedparser
+bs4
+fritzconnection

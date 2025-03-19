@@ -10,7 +10,7 @@ from datetime import datetime
 import pathlib
 import pixelit
 
-
+import sys
 
 class AppLoop:
   def __init__(self):
@@ -41,8 +41,8 @@ class AppLoop:
       for i in self.getApplist():
         try:
           checkTime()
-          subprocess.call(i.getPath()) #calling individual .py scripts
-          print("\n[DEBUG] Advancing to next app \n")
+          print("\n[DEBUG] Advancing to next app »" +i.getAppname()+"«")
+          subprocess.run([sys.executable, i.getPath()]) # call individual scripts within same python venv
         except subprocess.CalledProcessError as err:
          print("[ERROR] Something happend calling an app in the app loop.")
         except PermissionError:
@@ -67,7 +67,7 @@ def checkTime():
     current_time = datetime.now().time()
     start = datetime.strptime(config.setup['starttime'], '%H:%M').time()
     stop = datetime.strptime(config.setup['stoptime'], '%H:%M').time()
-    print("[DEBUG] It is", current_time, "we start at", start,"and we stop at",stop)
+    #print("[DEBUG] It is", current_time, "we start at", start,"and we stop at",stop) #debug for start / stop timer
     if (current_time > start) and (current_time < stop):
       pixelit.pixelItSleep(False)
     else:
