@@ -244,6 +244,7 @@ What is important here?
 
 # Changelog
 
+* 2025-03-19: Easier to setup pixelit-server via python venv.
 * 2024-04-20: Adding start and stop times in config for pixelit-server.py
 * 2024-04-02: Changed app discovery to config.py instead of having it in a defined directory structure.
 * 2023-12-20: Changed file and directory structure to maintain a cleaner project. See "How to setup Pixelit Server" section.
