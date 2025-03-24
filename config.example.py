@@ -75,3 +75,8 @@ pihole = {
   'apitoken': '000000000xxxx000000x0xxxx000', # API token from pihole webinterface
   'fechtEveryMinutes' : 1440,                 #amount of minutes between fetching new data
 }
+
+daycountdown = {
+  'targetdate' : "2027-12-24",              # future date in format YYYY-MM-DD
+  'tragetname' : "Christmas of the future", # descibtion of that date to show in the messsage
+}
