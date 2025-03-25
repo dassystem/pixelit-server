@@ -56,6 +56,8 @@ And hopefully you don't have do dig too deep into `pixelit.py`'s code since all 
 * Nightscout Bloodsugar Display
 * tatort / Polizeiruf 110 Checker
 * Messagequeue via CSV
+* Fritzbox connection speed display
+* Day countdown
 
 ### Setup pixelit.py via config.py
 
