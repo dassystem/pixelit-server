@@ -77,7 +77,14 @@ pihole = {
 }
 
 daycountdown = {
-  'targetdate' : "2027-12-24",              # future date in format YYYY-MM-DD
-  'tragetname' : "Christmas of the future", # descibtion of that date to show in the messsage
-  'topic'      : "calendar",                # Determines the icon. currently "holiday", "birthday", "xmas", "calendar"
+  'entry' : {
+      'xmas-2027': {
+        'targetdate' : "2027-12-24",              # future date in format YYYY-MM-DD
+        'tragetname' : "Christmas of the future", # descibtion of that date to show in the messsage
+        'topic'      : "xmas",                    # Determines the icon. currently "holiday", "birthday", "xmas", "calendar"
+      }
+      'trashcans': {
+        'targetdate' : "2025-09-05",              # future date in format YYYY-MM-DD
+        'tragetname' : "Take out trash cans",     # descibtion of that date to show in the messsage
+      }
 }
