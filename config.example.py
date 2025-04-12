@@ -66,7 +66,7 @@ nightscout = {
 weather = {
   'lat' : 51.17,                # lat of the desired location
   'lon' : 7.01,                 # lon of the desired location
-  'fechtEveryMinutes' : 1440,   # amount of minutes between fetching new data
+  'fetchEveryMinutes' : 1440,   # amount of minutes between fetching new data
   'apikey' : "000x0x0x00x0xx0x", # openweathermap.com api key
 }
 
