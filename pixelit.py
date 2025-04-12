@@ -201,7 +201,11 @@ def sending(senddata):
     port=config.mqtt['port']
     topic=str(config.mqtt['topic'])+'/setScreen'
     QOS = config.mqtt['qos']
-    client1= mqtt.Client("control1")                           
+    client1= mqtt.Client(mqtt.CallbackAPIVersion.VERSION1,"control1")        
+    try: # check if username / password is set
+        client1.username_pw_set(username=config.mqtt['username'], password=config.mqtt['password'])      #suggestetd by https://github.com/Ucsus          
+    except: # else continue without username/PW auth
+        print("[DEBUG] MQTT no username/pw found in config")
     client1.connect(broker,port)  
     #print("[DEBUG] Sending to",topic,"@",broker)
     client1.publish(topic,senddata,qos=QOS)

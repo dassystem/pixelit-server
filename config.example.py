@@ -10,6 +10,8 @@ mqtt = {
   'usage' : False,              # False = fallback to REST
   'broker' : '192.168.178.2',   # URL of the MQTT broker
   'port' : 1883,                # Port of the MQTT broker, default: 1883 
+  'username' : 'myuser',        # mqtt username
+  'password' : 'mypassword',    # mqtt password
   'topic' : 'smarthome/PixelIt',# Topic set in the pixelit web ui
   'qos': 1                      # default: 1
 }
