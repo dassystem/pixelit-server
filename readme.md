@@ -1,7 +1,7 @@
 # License
 
 pixelit.py and Pixelit Server
-Copyright (C) 2023-2024
+Copyright (C) 2023-2025
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -67,9 +67,38 @@ And hopefully you don't have do dig too deep into `pixelit.py`'s code since all 
 cp config.example.py config.py
 ```
 
-> :warning: Please enter one or more URLs of your pixelit controller to get started.
+> :warning: Please enter one or more URLs of your pixelit controller to get started when using REST for your communication.
 
+#### Setup MQTT
+There are two options of communicating between the server/`pixelit.py` and your pixelit LED-matrix: MQTT and REST.
 
+When using MQTT instead of REST make sure to setup credentials in config.py. 
+
+```yaml
+mqtt = {
+  'usage' : True,               # False = fallback to REST
+  'broker' : '192.168.178.2',   # URL of the MQTT broker
+  'port' : 1883,                # Port of the MQTT broker, default: 1883 
+  'username' : 'myuser',        # mqtt username
+  'password' : 'mypassword',    # mqtt password
+  'topic' : 'smarthome/PixelIt',# Topic set in the pixelit web ui
+  'qos': 1                      # default: 1
+}
+```
+
+`username` and `password` are usually not required unless you have an authenticated mqtt setup. If these fields in config are empty authentification will be ignored.
+
+#### Setup REST
+The REST setup requires a list of URLs for your pixelit units:
+
+```
+setup = {
+  'pixeliturls' : ['http://192.168.178.1','http://192.168.178.2'], # Array of URLs of the microcontroller running pixelit
+[…]
+}
+```
+
+Make sure to include the protocol `http://` / `https://` in the URL.
 
 
 ### Sending Text to Matrix
@@ -193,7 +222,7 @@ As reference implementation see this commented example from `dota-led.py` usning
 
 While the pixelit platform can only handle single calls via MQTT or REST, Pixelit Server collects multiple scripts and loops them, creating a constant varaity of information shown on your led matrix.
 
-Therefore is dependent on functions defined in `pixelit.py`. While you can use `pixelit.py` on its own, the server always needs interaction with pixelit.py functions.
+Therefore is dependent on functions defined in `pixelit.py`. While you can use `pixelit.py` on its own, the server always needs interaction with `pixelit.py` functions.
 
 ### Pixelit Server Features
 * Display and cycle all configured python scripts ("Apps") using `pixelit.py`
