@@ -91,7 +91,7 @@ mqtt = {
 #### Setup REST
 The REST setup requires a list of URLs for your pixelit units:
 
-```
+```yaml
 setup = {
   'pixeliturls' : ['http://192.168.178.1','http://192.168.178.2'], # Array of URLs of the microcontroller running pixelit
   # […]
@@ -153,11 +153,6 @@ For details please also consider https://pixelit-project.github.io/api.html#text
 ![RSS](img/rss-video.gif)
 
 
-### `sendNotification()` (not implemented yet)
-
- (Implementation tbd.)
-
-
 ### pixelItSleep(bool=True)
 
  You can switch off the display (not the controller/client!) via `pixelItSleep(True)`. This affects all pixelIt instances set up in `config.py`.
@@ -167,7 +162,7 @@ For details please also consider https://pixelit-project.github.io/api.html#text
 
 ### skipApp()
 
- `skipApp()` is used without agruments and tells the script to the display time of the current script to 0. For examples see [jellyfin-trackinfo-led.py](./jellyfin-trackinfo-led.py).
+ `skipApp()` is used without agruments and sets the display time of the current script to 0. For examples see [jellyfin-trackinfo-led.py](./jellyfin-trackinfo-led.py).
 
 #### Example skipApp()
 
@@ -232,7 +227,7 @@ Therefore is dependent on functions defined in `pixelit.py`. While you can use `
 
 > :warning: From 2024-04-02 on all apps need to be configured in `config.py`
 
-1. In `config.py` setup the IPs to your hardware pixelit units. You might also want to adjust the text scroll speed via `scrollTextDelay` and use `minSecondsPerApp` to define a minimal time per app on the display. 
+1. In `config.py` setup MQTT or REST to enable communication with your pixelit units. You might also want to adjust the text scroll speed via `scrollTextDelay` and use `minSecondsPerApp` to define a minimal time per app on the display. 
 2. In `config.py` add all the names and paths (absolute paths recommended) to a list in the "apps" section. E.g.:
 ```
 apps = {
@@ -255,15 +250,17 @@ apps = {
 You can add as many apps in your `config.py`, as you want. You can also add the same app multiple times, but make sure to give them unique names (e.g. "clock1", "clock2") to have them mutiple times in your apploop.
 
 
-### How to create and define apps?
+## How to create and define apps?
 
-To create and define apps for pixelit and pixelit server you should use functions from pixelit.py.
+To create and define apps for pixelit and pixelit server you should use functions from `pixelit.py`.
 
 What is important here?
 * When sending an app via `pixelit.sendApp()` it not only shows bitmap and text message, but also calculates the length of the message via `pixelit.calculateDisplayDuration()`.
 * If a message is shorter than the configured `minSecondsPerApp` in `config.py`, then it waits for exactly this duration.
 * If a massage is longer than the configured duration, it calculates the time depending on the length of the message.
-* If you call an script in your but do not want anything to show, use `pixelit.skipApp()` to signalize skipping the char check and proceeding with the next app. This can be used to skip an app.
+* If you call an script in your but do not want anything to show, use `pixelit.skipApp()` to signalize skipping the length check of your displayed message and proceeding with the next app. This can be used to skip an app.
+
+> :info: You can use existing apps as template. Also feel free to create an issue on this git platform, if you have questions creating your own applications with `pixelit.py`.
 
 
 
@@ -275,6 +272,7 @@ What is important here?
 
 # Changelog
 
+* 2025-04-12: Added optional MQTT authentication.
 * 2025-03-19: Easier to setup pixelit-server via python venv.
 * 2024-04-20: Adding start and stop times in config for pixelit-server.py
 * 2024-04-02: Changed app discovery to config.py instead of having it in a defined directory structure.
