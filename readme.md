@@ -264,13 +264,13 @@ What is important here?
 
 
 
-# Debugging
+## Debugging
 
 * When your message is interrupted by the internal clock display consider setting a higher value in your Pixelit web UI for clock auto fallback time 
 
 
 
-# Changelog
+## Changelog
 
 * 2025-04-12: Added optional MQTT authentication.
 * 2025-03-19: Easier to setup pixelit-server via python venv.
