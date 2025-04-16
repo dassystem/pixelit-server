@@ -94,7 +94,7 @@ The REST setup requires a list of URLs for your pixelit units:
 ```
 setup = {
   'pixeliturls' : ['http://192.168.178.1','http://192.168.178.2'], # Array of URLs of the microcontroller running pixelit
-[…]
+  # […]
 }
 ```
 
