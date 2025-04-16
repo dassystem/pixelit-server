@@ -260,7 +260,7 @@ What is important here?
 * If a massage is longer than the configured duration, it calculates the time depending on the length of the message.
 * If you call an script in your but do not want anything to show, use `pixelit.skipApp()` to signalize skipping the length check of your displayed message and proceeding with the next app. This can be used to skip an app.
 
-> :info: You can use existing apps as template. Also feel free to create an issue on this git platform, if you have questions creating your own applications with `pixelit.py`.
+> :warning: You can use existing apps as template. Also feel free to create an issue on this git platform, if you have questions creating your own applications with `pixelit.py`.
 
 
 
