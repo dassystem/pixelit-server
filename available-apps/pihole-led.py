@@ -10,19 +10,24 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import pixelit
 import config
 
+# For V6 see: https://github.com/bazmonk/pihole6_exporter/blob/main/pihole6_exporter
+# https://github.com/sbarbett/pihole6api <--- !
 
+from pihole6api import PiHole6Client
 
+def extract_key_value(json_data, key):
+    """Extracts a specific key-value pair from a JSON data"""
+    data = json.loads(json_data)
+    value = data.get(key)
+    return value
 
 def getAdsBlockedToday():
-  sendheaders = {'Content-Type': 'application/json'}
-  piholeurl= config.pihole['url']+'/admin/api.php?summary&auth='+config.pihole['apitoken']
-  #print("[DEBUG]" Pi-Hole URL:, piholeurl)
-
-  try:
-    piholedata = json.loads(requests.get(url=piholeurl,headers=sendheaders).content.decode("utf-8"))
-    out=piholedata["ads_blocked_today"]
-    out=out.replace(",", ".") #decimal comma
-    return out
+  try: 
+    client = PiHole6Client(config.pihole['url'], config.pihole['apitoken'])
+    queries = client.metrics.get_stats_summary()
+  #print(queries)
+    totalblocked=queries['queries']['blocked']
+    return str(totalblocked)
   except:
     print("[ERROR] Could not reach pi hole URL under", config.pihole['url'])
     pixelit.skipApp()
@@ -46,14 +51,17 @@ def send2matrix(printtext):
 if __name__ == "__main__":
   myappname="pihole"
 
-  if pixelit.exceedsTimeLimit(myappname,config.pihole['fetchEveryMinutes']):
-    data=getAdsBlockedToday()
-    pixelit.writeDataToFile(data,myappname)
-  else:
-    try:
-      data=pixelit.readDataFromFile(myappname)
-    except:
-      data=getAdsBlockedToday()
-      pixelit.writeDataToFile(data,myappname)
+  data=getAdsBlockedToday()
+  pixelit.writeDataToFile(data,myappname)
+
+#  if pixelit.exceedsTimeLimit(myappname,config.pihole['fetchEveryMinutes']):
+#    data=getAdsBlockedToday()
+#    pixelit.writeDataToFile(data,myappname)
+#  else:
+#    try:
+#      data=pixelit.readDataFromFile(myappname)
+#    except:
+#      data=getAdsBlockedToday()
+#      pixelit.writeDataToFile(data,myappname)
   send2matrix(data)
   
