@@ -10,7 +10,6 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import pixelit
 import config
 
-# For V6 see: https://github.com/bazmonk/pihole6_exporter/blob/main/pihole6_exporter
 # https://github.com/sbarbett/pihole6api <--- !
 
 from pihole6api import PiHole6Client
@@ -51,17 +50,14 @@ def send2matrix(printtext):
 if __name__ == "__main__":
   myappname="pihole"
 
-  data=getAdsBlockedToday()
-  pixelit.writeDataToFile(data,myappname)
-
-#  if pixelit.exceedsTimeLimit(myappname,config.pihole['fetchEveryMinutes']):
-#    data=getAdsBlockedToday()
-#    pixelit.writeDataToFile(data,myappname)
-#  else:
-#    try:
-#      data=pixelit.readDataFromFile(myappname)
-#    except:
-#      data=getAdsBlockedToday()
-#      pixelit.writeDataToFile(data,myappname)
+  if pixelit.exceedsTimeLimit(myappname,config.pihole['fetchEveryMinutes']):
+    data=getAdsBlockedToday()
+    pixelit.writeDataToFile(data,myappname)
+  else:
+    try:
+      data=pixelit.readDataFromFile(myappname)
+    except:
+      data=getAdsBlockedToday()
+      pixelit.writeDataToFile(data,myappname)
   send2matrix(data)
   
