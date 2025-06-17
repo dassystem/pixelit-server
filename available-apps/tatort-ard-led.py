@@ -138,8 +138,9 @@ def compare(krimiurls):
     separator = "|"
     out=krimi.getTime().split(separator,1)[1]
     out = datetime.datetime.strptime(out," %H:%M Uhr")
-    if out.hour!=20:
-      #print("is not primetime")
+    present = datetime.datetime.today()
+    if out.hour!=20 or out < present:
+      #print("is not primetime or in the past")
       krimiliste.remove(krimi)
 
   #check for empty list:
