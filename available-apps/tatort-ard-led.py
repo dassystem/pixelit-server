@@ -38,10 +38,13 @@ def dateConvert(oldDate):
 
 
 
-def krimi2ledmatrix(msg):
+def krimi2ledmatrix(msg,happens):
     print("[INFO] Sending to ledmatrix:", msg)
     #has fresh tatort 
-    myicon="[693,693,65535,693,693,693,693,693,65535,65535,65535,65535,65535,693,693,693,693,693,65535,693,693,65535,693,693,693,65535,65535,65535,693,693,65535,693,65535,693,65535,693,65535,693,693,65535,693,693,65535,693,693,65535,693,65535,65535,65535,693,65535,65535,65535,65535,65535,693,693,65535,693,693,65535,693,65535]"
+    if happens == False:
+        myicon="[693,693,65535,693,693,693,693,693,65535,63488,65535,65535,65535,693,693,63488,693,693,63488,693,693,65535,63488,693,693,65535,65535,63488,693,63488,65535,693,65535,693,65535,693,63488,693,693,65535,693,693,65535,63488,693,63488,693,65535,65535,65535,63488,65535,65535,65535,63488,65535,693,63488,65535,693,693,65535,693,63488]"
+    else:
+        myicon="[693,693,65535,693,693,693,693,693,65535,65535,65535,65535,65535,693,693,693,693,693,65535,693,693,65535,693,693,693,65535,65535,65535,693,693,65535,693,65535,693,65535,693,65535,693,693,65535,693,693,65535,693,693,65535,693,65535,65535,65535,693,65535,65535,65535,65535,65535,693,693,65535,693,693,65535,693,65535]"     
     pixelit.sendApp(text_msg=msg,
                     red=255,
                     green=255,
@@ -146,7 +149,7 @@ def compare(krimiurls):
     out = datetime.datetime.strptime(out," %H:%M Uhr")
     present = datetime.datetime.today()
     if out.hour!=20 or out < present:
-      print("is not primetime or in the past")
+      #print("is not primetime or in the past")
       krimiliste.remove(krimi)
     #print("Krimiliste is after")
     #for krimi2 in krimiliste:
@@ -166,7 +169,7 @@ def compare(krimiurls):
       scrollText="auto",
       centerText="false",
       )
-    return(msg)
+    return(msg,False)
     #quit()
     
   
@@ -198,7 +201,7 @@ def compare(krimiurls):
 
   msg ="Nächster "+ nextkrimi.getSeries() + ": »" + nextkrimi.getTitle() + "«, " + str(nextkrimi.getTime())
   krimi2ledmatrix(msg)
-  return(msg)
+  return(msg,True)
 
 
 if __name__ == "__main__":
