@@ -73,7 +73,7 @@ def checktatort(krimiurl):
       nextSeriesName=getSeriesname(rawhtml)
       return nextSeriesName, nextTitle, nextDate
     except:
-      print("[INFO] No Krimi found under this URL")
+      print("[INFO] No Krimi found under",krimiurl)
       return 1
       
 def getTatortdate(html):
