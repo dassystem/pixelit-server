@@ -57,6 +57,7 @@ def checktatort(krimiurl):
 #    tatorturl=polizeirufurl
     try: 
       rawhtml = scrapHTML(krimiurl)
+      #print("[DEBUG] testing",krimiurl)
       #print("scraped")
     except:
       print("[ERROR] ARD URL NOT REACHABLE OR SIMILAR PROBLEM PARSING")
@@ -129,23 +130,31 @@ def compare(krimiurls):
   for url in krimiurls:    
     if checktatort(url) != 1:
       mySeries,myTitle,myTime = checktatort(url)
-      krimi=Krimi(mySeries,myTitle,myTime)
-      krimiliste.append(krimi)
+      krimi_tmp=Krimi(mySeries,myTitle,myTime)
+      #print("[DEBUG] found krimi event", krimi_tmp.getTime(),krimi_tmp.getTitle(), krimi_tmp.getSeries())
+      krimiliste.append(krimi_tmp)
 
   krimitime=[]
   # Check for primetime
+  # print("[DEBUG] check for primetime")
   for krimi in krimiliste:
+    #print("Krimiliste is before")
+    #for krimi2 in krimiliste:
+    #    print(krimi2.getTitle())  
     separator = "|"
-    out=krimi.getTime().split(separator,1)[1]
+    out = krimi.getTime().split(separator,1)[1]
     out = datetime.datetime.strptime(out," %H:%M Uhr")
     present = datetime.datetime.today()
     if out.hour!=20 or out < present:
-      #print("is not primetime or in the past")
+      print("is not primetime or in the past")
       krimiliste.remove(krimi)
+    #print("Krimiliste is after")
+    #for krimi2 in krimiliste:
+    #    print(krimi2.getTitle())
 
   #check for empty list:
   if not krimiliste:
-    print("No krimi found / left")
+    print("[INFO] No krimi found / left")
     msg="Kein Tatort/Polizeiruf in naher Zukunft!"
     myicon="[693,693,65535,693,693,693,693,693,65535,63488,65535,65535,65535,693,693,63488,693,693,63488,693,693,65535,63488,693,693,65535,65535,63488,693,63488,65535,693,65535,693,65535,693,63488,693,693,65535,693,693,65535,63488,693,63488,693,65535,65535,65535,63488,65535,65535,65535,63488,65535,693,63488,65535,693,693,65535,693,63488]"
     pixelit.sendApp(text_msg=msg,
@@ -157,7 +166,8 @@ def compare(krimiurls):
       scrollText="auto",
       centerText="false",
       )
-    quit()
+    return(msg)
+    #quit()
     
   
   # Compare dates / convert "heute" to date to find the next Krimi
@@ -182,6 +192,10 @@ def compare(krimiurls):
 
   index=krimitime.index(min(krimitime)) #find smallest date and get index of list
   nextkrimi=krimiliste[index]
+
+  #check for old year
+  #print("[DEBUG]", nextkrimi.getTime())
+
   msg ="Nächster "+ nextkrimi.getSeries() + ": »" + nextkrimi.getTitle() + "«, " + str(nextkrimi.getTime())
   krimi2ledmatrix(msg)
   return(msg)
@@ -198,7 +212,7 @@ if __name__ == "__main__":
 
     # fresh data
     if pixelit.exceedsTimeLimit(myappname,config.tatort['fetchEveryMinutes']):
-      pixelit.writeDataToFile(compare(krimiurls),myappname) #compare, send, and save
+        pixelit.writeDataToFile(compare(krimiurls),myappname) #compare, send, and save
     else:
       try:
         data=pixelit.readDataFromFile(myappname) #read old data from cache
