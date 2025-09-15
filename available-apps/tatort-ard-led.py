@@ -200,7 +200,7 @@ def compare(krimiurls):
   #print("[DEBUG]", nextkrimi.getTime())
 
   msg ="Nächster "+ nextkrimi.getSeries() + ": »" + nextkrimi.getTitle() + "«, " + str(nextkrimi.getTime())
-  krimi2ledmatrix(msg)
+  krimi2ledmatrix(msg,True)
   return(msg,True)
 
 
