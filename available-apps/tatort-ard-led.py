@@ -71,6 +71,7 @@ def checktatort(krimiurl):
       nextDate = getTatortdate(rawhtml)
       nextTitle= getTatorttitle(rawhtml)
       nextSeriesName=getSeriesname(rawhtml)
+      print("[INFO] Found",nextSeriesName, nextTitle, nextDate)
       return nextSeriesName, nextTitle, nextDate
     except:
       print("[INFO] No Krimi found under",krimiurl)
@@ -140,7 +141,9 @@ def compare(krimiurls):
   krimitime=[]
   # Check for primetime
   # print("[DEBUG] check for primetime")
+
   for krimi in krimiliste:
+    print("[DEBUG] In Krimikliste:", krimi.getTitle())
     #print("Krimiliste is before")
     #for krimi2 in krimiliste:
     #    print(krimi2.getTitle())  
@@ -148,8 +151,11 @@ def compare(krimiurls):
     out = krimi.getTime().split(separator,1)[1]
     out = datetime.datetime.strptime(out," %H:%M Uhr")
     present = datetime.datetime.today()
-    if out.hour!=20 or out < present:
-      #print("is not primetime or in the past")
+    #print(out.hour!=20,"keine prime time")
+    #print(out < present,"vergangenheit") 
+    #print(out, present)
+    if out.hour!=20:# or out < present:
+      print("is not primetime or in the past")
       krimiliste.remove(krimi)
     #print("Krimiliste is after")
     #for krimi2 in krimiliste:
