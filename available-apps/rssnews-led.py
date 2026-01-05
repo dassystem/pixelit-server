@@ -72,7 +72,7 @@ def sendTo(myNews):
 
   #outputstring="("+myNews.getSource()+") " + myNews.getTitle()
   outputstring=myNews.getTitle()
-  
+  outputstring = (outputstring[:125] + '..') if len(outputstring) > 125 else outputstring #shorten long text
 
   outputstring=outputstring.replace('"','\"') #escape doublequotes
   outputstring=outputstring.replace("'","\'") #escape singlequotes
@@ -163,8 +163,9 @@ if __name__ == "__main__":
   else:
     print("[DEBUG] Loading news from cache")
     full_newslist=pixelit.readDataFromFile(myappname)
-    #for item in full_newslist:
-    #  print("[DEBUG]",item.getSource(),item.getTitle())
+    #testing:
+    for item in full_newslist:
+      print("[DEBUG]",item.getSource(),item.getTitle())
 
   if full_newslist:
     # get random news and send to pixelit      
