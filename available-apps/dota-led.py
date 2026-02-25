@@ -10,6 +10,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import pixelit
 import config
 
+from datetime import datetime
+
+
 
 def getOpenDotaData():
   sendheaders = {'Content-Type': 'application/json'}
@@ -22,11 +25,25 @@ def getOpenDotaData():
     pixelit.skipApp()
     quit()
 
+def getLastGame():
+  sendheaders = {'Content-Type': 'application/json'}
+  lastgame = 'https://api.opendota.com/api/players/'+str(config.dota['player'])+'/matches?limit=1'+'&game_mode='+str(config.dota['gamemode'])
+  lastgameinfo = requests.get(url=lastgame, headers=sendheaders)
+  lastgameinfo = json.loads(json.dumps(lastgameinfo.json()))
+#  print(lastgameinfo)
+  gamestart = lastgameinfo[0]['start_time']
+  gamedate = datetime.utcfromtimestamp(gamestart) #.strftime('%Y-%m-%d %H:%M:%S')
+ # print("Last game:",gamedate)
+  lastdate =  str((datetime.now() - gamedate).days)
+  print("[INFO] Last game is days ago:", lastdate)
+  return lastdate
+
 def getAllOpenDotaData():
   sendheaders = {'Content-Type': 'application/json'}
   playerwin= 'https://api.opendota.com/api/players/'+str(config.dota['player'])+'/matches?date='+str(config.dota['days'])
   try:
     windata = requests.get(url=playerwin,headers=sendheaders)
+    print(windata)
     return(windata)
   except: 
     print("[Error] Cannot connect to opendota")
@@ -41,7 +58,7 @@ def calcWinrate(windata):
   lose=mywindata['lose']
 
   if win+lose == 0:
-    printtext = "0 Games"
+    printtext = "Last game: "+ getLastGame() + " days ago"
   else:
     winrate = round(float(win)/(int(lose)+int(win)),3)*100
     printtext= str(round(winrate,2)) +'%'
